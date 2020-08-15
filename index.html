@@ -4,30 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classroom App</title>
-    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
-    <script defer src="script.js"></script>
+    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>    
+    <script src="index.js"></script>
+    <script src="index.css"></script>
 </head>
 <body>
 <div id="main">
-        <h2>SERVER TEST APP</h2>
-        <p>Learning how to work with servers with Socket.io</p>
-        <button data-main=1>Create Quiz</button>
-        <button data-main=2>Join Classroom</button>
-        <button data-main=3>Host Classroom</button>
+        <h2>Quiz Maker App</h2>
+        <p>Create a Quiz and host a online class</p>
+        <button id="create">Create Quiz</button>
+        <button id="join">Join Classroom</button>
+        <button id="host">Host Classroom</button>
 </div>
 <div id="create-container">
 
 </div>
 <div id="join-container">
-
 </div>
-<div id="host-container"></div>
+<div id="host-container">
+    <div id="chatroom-container"></div>
     <form id="send-container">
         <input type="text" id="message-input">
         <button type="submit" id="send-button">Send</button>
     </form>
-
+</div>
 </body>
-<script src="index.js"></script>
-<script src="index.css"></script>
 </html>
