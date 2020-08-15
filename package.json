@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +14,13 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dukhyunko93/QuizCreator_frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dukhyunko93/QuizCreator_frontend/issues"
+  },
+  "homepage": "https://github.com/dukhyunko93/QuizCreator_frontend#readme"
 }

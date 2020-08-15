@@ -1,4 +1,4 @@
-const io= require('socket.io')(3000)
+const io= require('socket.io')(3001)
 
 //list of students
 const users = {}
