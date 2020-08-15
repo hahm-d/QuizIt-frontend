@@ -2,17 +2,14 @@ const io= require('socket.io')(3001)
 
 //list of students
 const users = {}
-//list of groupChat
-const chatGroupList = []
 
 io.on('connection', socket => {
-    //console.log(new user)
-    socket.emit('intro-message', 'Hello Class! Session will begin once the host starts the quiz')
-    //display the messages after host has emitted message
+
+    //socket.emit('intro-message', `Welcome! Session will begin once the host starts the quiz`)
     socket.on('new-user', name => {
         //each socket has a unique id thus can use to set with users
         users[socket.id] = name
-        socket.broadcast.emit("user-connected", name) //handle this back on client
+        socket.broadcast.emit("user-connected", name)
     })
     socket.on('send-chat-message', message => {
        
