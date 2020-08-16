@@ -1,4 +1,4 @@
-const io= require('socket.io')(3001)
+/* const io= require('socket.io')(3001)
 
 //list of students
 const users = {}
@@ -20,3 +20,4 @@ io.on('connection', socket => {
         delete users[socket.id]
     })
 })
+ */

@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Maker</title>
     <link rel="stylesheet" href="index.css">
-    <script src="index.js"></script>
-    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>    
+    <script src="index.js"></script>  
 </head>
 <body>
-<div id="main" class="hidden_div">
+<div id="main" class="seen_div">
         <h2>Quiz Maker App</h2>
         <p>Create your own Quiz! Share and dicuss</p>
         <button id="create">Create Quiz</button>
@@ -18,7 +17,7 @@
 </div>
 <div id="create_container" class="hidden_div">
         <h2>Create Quiz</h2>
-    <div id="quiz_form_container" class="hidden_div">
+    <div id="quiz_form_container" class="seen_div">
         <form id="main_quiz">
             <label for="teacher_name">Creator Name:</label>
             <input type="text" name="teacher_name" maxlength="20"><br>
@@ -26,8 +25,8 @@
             <input type="text" name="email" maxlength="40"><br>
             <label for="quiz_title">Quiz title:</label>
             <input type="text" name="quiz_title" maxlength="40"><br>
-            <label for="minutes">Time limit:</label>
-            <input type="text" name="minutes" placeholder="Minutes">
+            <label for="timer">Time limit:</label>
+            <input type="number" name="timer" placeholder="Minutes">
             <button type="submit">Next</button>
         </form> 
     </div>

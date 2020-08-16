@@ -1,6 +1,5 @@
  document.addEventListener("DOMContentLoaded", () => {
     const main = document.getElementById("main")
-    switchHiddenDiv(main)
     const chatroom = document.getElementById("join_container")
     const takequiz = document.getElementById("take_container")
     const createquiz = document.getElementById("create_container")
@@ -14,8 +13,7 @@
             //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(chatroom)
-            //start the server !
-            server()
+            //server start here after fix
        }else if(e.target.matches("#take")){
             //hide main div
             switchHiddenDiv(main)
@@ -27,8 +25,8 @@
             switchHiddenDiv(main)
             switchHiddenDiv(createquiz)
        }else if(e.target.matches("#finishform")){
-            switchHiddenDiv(main)
-            switchHiddenDiv(questionFormContainer)
+            //switchHiddenDiv(main)
+            //switchHiddenDiv(questionFormContainer)
        }
     }) 
 
@@ -36,9 +34,11 @@
     //main form submit
     document.addEventListener("submit", e => {
         e.preventDefault()
-        //console.log(e.target)
         if(e.target.matches("#main_quiz")){
-            console.log(e.target)
+            //create the object and send to backend API 
+            postQuiz(e.target)
+            switchHiddenDiv(quizFormContainer)
+            switchHiddenDiv(questionFormContainer)
         } else if(e.target.matches("#find_quiz")){
             const uniq_code = e.target.unique_code.value
             getQuiz(uniq_code)
@@ -62,57 +62,13 @@ const renderQuestion = (question) => {
 
 //helper function
 function switchHiddenDiv(div){
-    //var must be defined globally
    return div.className == "hidden_div" ? div.className = "seen_div" : div.className = "hidden_div" 
 }
 
-//Server below
-const server = () => {
-    const socket = io("http://localhost:3000")
-    const messageContainer = document.getElementById("chatroom_container")
-    const messageForm = document.getElementById("send_container")
-    const messageInput = document.getElementById("message_input")
-    const name = prompt("what is your name?")
-    appendMessage('You joined')
-
-    socket.emit('new-user', name)
-
-
-    socket.on("intro-message", data => {
-        appendMessage(data)
-    
-    })
-
-    socket.on("chat-message", data => {
-        appendMessage(`${data.name}: ${data.message}`)
-    })
-    socket.on("user-connected", name => {
-        appendMessage(`${name} joined the class!`)
-    })
-    socket.on("user-disconnected", name => {
-        appendMessage(`${name} left the class.`)
-    })
-
-    messageForm.addEventListener("submit", e => {
-        e.preventDefault()
-        //get message
-        const message = messageInput.value
-        //emit the message
-        socket.emit("send-chat-message", message)
-        //after emitting, clear out the value of this variable
-        messageInput.value = ''
-        //users sees his/her own message
-        appendMessage(`${name}: ${message}`)
-    })
-
-    //function for appending messages
-    function appendMessage(message) {
-        const messageElement = document.createElement('div')
-        messageElement.innerText = message
-        //new div created above and we want to append it to the message container
-        messageContainer.append(messageElement)
-    }
+function randomizer(){
+    return Math.floor((Math.random() * 100) + 1000);
 }
+
 
 //fetch request
 const QUIZ_URL = "http://localhost:3000/quizzes/"
@@ -122,4 +78,28 @@ const getQuiz = (uniq_code) => {
     .then(resp => resp.json())
 };
 
+
+const postQuiz = (quiz_obj) => {
+    const rando = randomizer()
+    console.log(quiz_obj)
+    const setting = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: "application/json"
+        },
+        body: JSON.stringify({
+            "uniqueCode": rando,
+            "teacher_name": quiz_obj.teacher_name.value,
+            "teacher_email": quiz_obj.teacher_name.value,
+            "title": quiz_obj.quiz_title.value, 
+        })
+    }
+    return fetch(QUIZ_URL, setting)
+    .then(resp => resp.json())
+    .then((quiz_obj) => {
+        let createdQuiz = quiz_obj
+    })
+ 
+}
 })
