@@ -1,36 +1,39 @@
  document.addEventListener("DOMContentLoaded", () => {
     const main = document.getElementById("main")
-    //const host = document.getElementById("host")
 
-    // hide the chatroom initially
-    const chatroom = document.getElementById("host-container")
+    // hide the containers initially
+    const chatroom = document.getElementById("join-container")
     chatroom.style.display = "none";
-    const joinroom = document.getElementById("join-container")
-    joinroom.style.display = "none";
+    const takequiz = document.getElementById("take-container")
+    takequiz.style.display = "none";
+    const createquiz = document.getElementById("create-container")
+    createquiz.style.display = "none";
 
     //main on-click listener
      document.addEventListener("click", e => {
     // note: can use switch cases as well
-       if(e.target.matches("#host")){
+       if(e.target.matches("#join")){
             //hide main div
             main.style.display = "none";
-            joinroom.style.display = "block";
-            //chatroom.style.display = "block";
-            //server()
-       }else if(e.target.matches("#join")){
+            chatroom.style.display = "block";
+            //start the server !
+            server()
+       }else if(e.target.matches("#take")){
             //hide main div
             main.style.display = "none";
-            joinroom.style.display = "block";
+            takequiz.style.display = "block";
 
        }else if(e.target.matches("#create")){
             //hide main div
             main.style.display = "none";
-
+            createquiz.style.display = "block";
        }
     }) 
 
 
     //main form submit
+
+
 
 
 

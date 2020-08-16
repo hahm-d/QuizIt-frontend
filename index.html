@@ -11,28 +11,37 @@
 <body>
 <div id="main">
         <h2>Quiz Maker App</h2>
-        <p>Create a Quiz and host a online class</p>
+        <p>Create your own Quiz! Share and dicuss</p>
         <button id="create">Create Quiz</button>
-        <button id="join">Join Classroom</button>
-        <button id="host">Host Classroom</button>
+        <button id="take">Take Quiz</button>
+        <button id="join">Join a Classroom</button>
 </div>
 <div id="create-container">
-
+    <form id="main-quiz">
+        <label>Create a Quiz</label><br>
+        <label for="teacher-name">Creator Name:</label>
+        <input type="text" id="teacher-name" maxlength="20"><br>
+        <label for="email">Email Address:</label>
+        <input type="text" id="email" maxlength="40"><br>
+        <label for="quiz-title">Quiz title:</label>
+        <input type="text" id="quiz-title" maxlength="40"><br>
+        <button type="submit">Send</button>
+    </form>   
 </div>
-<div id="join-container">
-    <form id="student-join-class">
-        <label for="class-code">Class Code:</label><br>
-        <input type="text" id="class-code">
+<div id="take-container">
+    <form id="find-quiz">
+        <label for="quiz-unique-code">Quiz Code:</label><br>
+        <input type="text" id="quiz-unique-code">
         <button type="submit">Send</button>
     </form>
 </div>
-<div id="host-container">
+<div id="join-container">
     <div id="chatroom-container"></div>
     <form id="send-container">
         <input type="text" id="message-input">
         <button type="submit" id="send-button">Send</button><br>
-        <label>Start Quiz once all students have joined</label><br>
-        <button type="submit" id="host-start-button">Start Quiz</button>
+        <label>Welcome to the classroom!</label><br>
+        <label>Share and discuss quizzes</label><br>
     </form>
 </div>
 </body>
