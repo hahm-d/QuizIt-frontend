@@ -1,1 +1,0 @@
-# QuizCreator_frontend
