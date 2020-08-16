@@ -92,25 +92,27 @@ const getQuiz = (uniq_code) => {
 
 const postQuiz = (quiz_obj) => {
     const rando = randomizer()
-    console.log(quiz_obj)
+    console.log(quiz_obj.teacher_email.value)
     const setting = {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
-            Accept: "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "uniqueCode": rando,
+            "quizzes": {
+            "unique_code": rando,
             "teacher_name": quiz_obj.teacher_name.value,
-            "teacher_email": quiz_obj.teacher_name.value,
-            "title": quiz_obj.quiz_title.value, 
+            "teacher_email": quiz_obj.teacher_email.value,
+            "title": quiz_obj.quiz_title.value,
+            "time_limit": quiz_obj.timer.value
+            }
         })
     }
-    return fetch(QUIZ_URL, setting)
-    .then(resp => resp.json())
-    .then((quiz_obj) => {
-        let createdQuiz = quiz_obj
-    })
+    // return fetch(QUIZ_URL, setting)
+    // .then(resp => resp.json())
+    // .then((quiz_obj) => {
+    //     let createdQuiz = quiz_obj
+    // })
  
 }
 })
