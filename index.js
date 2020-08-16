@@ -20,8 +20,6 @@
             //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(takequiz)
-            main.style.display = "none";
-            takequiz.style.display = "block";
        }else if(e.target.matches("#create")){
             //hide main div
             switchHiddenDiv(main)
@@ -43,7 +41,12 @@
             const uniq_code = e.target.unique_code.value
             getQuiz(uniq_code)
             .then(quiz => {
-                debugger
+                if(quiz !== null){
+                    switchHiddenDiv(takequiz)
+                    confirmQuiz(quiz)
+                } else {
+                    alert("This quiz does not exist")
+                }
             })
         }else if(e.target.matches("add question")){
             //reset form after submitting to backend 
@@ -52,8 +55,16 @@
     })
 
 // render the quiz
-const renderQuiz = (quiz) => {
+const confirmQuiz = (quiz) => {
+    const confirmQuizBox = document.getElementById("confirm_quiz")
+    switchHiddenDiv(confirmQuizBox)
+    const quizTitle = document.createElement("h2")
+    const quizTeacher = document.createElement("p")
     
+    quizTitle.innerText = `${quiz.title}`
+    quizTeacher.innerText = `Teacher Name: ${quiz.teacher_name}`
+
+    confirmQuizBox.prepend(quizTitle, quizTeacher)
 }
 
 const renderQuestion = (question) => {
@@ -62,7 +73,7 @@ const renderQuestion = (question) => {
 
 //helper function
 function switchHiddenDiv(div){
-    //var must be defined globally
+    //var must be defined lexically
    return div.className == "hidden_div" ? div.className = "seen_div" : div.className = "hidden_div" 
 }
 
