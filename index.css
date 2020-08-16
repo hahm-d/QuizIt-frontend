@@ -1,0 +1,7 @@
+.hidden_div {
+    display: none;
+}
+
+.seen_div {
+    display: block;
+}

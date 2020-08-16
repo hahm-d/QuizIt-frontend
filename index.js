@@ -1,13 +1,19 @@
  document.addEventListener("DOMContentLoaded", () => {
     const main = document.getElementById("main")
 
-    // hide the main containers initially
-    const chatroom = document.getElementById("join-container")
-    chatroom.style.display = "none";
-    const takequiz = document.getElementById("take-container")
+    // hide the main containers initially (damn this is going to be messy lol)
+    const chatroom = document.getElementById("join_container")
+    //chatroom.style.display = "none";
+    test(chatroom)
+    const takequiz = document.getElementById("take_container")
     takequiz.style.display = "none";
-    const createquiz = document.getElementById("create-container")
+    const createquiz = document.getElementById("create_container")
     createquiz.style.display = "none";
+    const startquiz = document.getElementById("start_quiz_container")
+    startquiz.style.display = "none";
+    const quizFormContainer = document.getElementById("quiz_form_container")
+    const questionFormContainer = document.getElementById("question_form_container")
+    questionFormContainer.style.display = "none";
 
     //main on-click listener
      document.addEventListener("click", e => {
@@ -25,9 +31,10 @@
             //hide main div
             main.style.display = "none";
             createquiz.style.display = "block";
-            const quizContainer = document.getElementById("quiz-form-container")
-            const questionContainer = document.getElementById("question-form-container")
-            questionContainer.style.display = "none"
+       }else if(e.target.getElementById("#finishform")){
+            quizFormContainer.style.display = "none"
+            questionFormContainer.style.display = "block"
+            
        }
     }) 
 
@@ -36,19 +43,42 @@
     document.addEventListener("submit", e => {
         e.preventDefault()
         //console.log(e.target)
-        if(e.target.matches("#main-quiz")){
+        if(e.target.matches("#main_quiz")){
             console.log(e.target)
+        } else if(e.target.matches("#find_quiz")){
+            const uniq_code = e.target.unique_code.value
+            getQuiz(uniq_code)
+            .then(quiz => {
+                renderQuiz(quiz)
+            })
+        }else if(e.target.matches("add question")){
+            //reset form after submitting to backend 
+            
         }
     })
 
+// render the quiz
+const renderQuiz = (quiz) => {
+    
+}
 
+const renderQuestion = (question) => {
+
+}
+
+//helper function
+function test(div){
+    //var must be defined globally
+   console.log(div.className)
+   return div.className == "hidden_div" ? div.className = "seen_div" : div.className = "hidden_div" 
+}
 
 //Server below
 const server = () => {
     const socket = io("http://localhost:3000")
-    const messageContainer = document.getElementById("chatroom-container")
-    const messageForm = document.getElementById("send-container")
-    const messageInput = document.getElementById("message-input")
+    const messageContainer = document.getElementById("chatroom_container")
+    const messageForm = document.getElementById("send_container")
+    const messageInput = document.getElementById("message_input")
     const name = prompt("what is your name?")
     appendMessage('You joined')
 
@@ -90,4 +120,13 @@ const server = () => {
         messageContainer.append(messageElement)
     }
 }
+
+//fetch request
+const QUIZ_URL = "http://localhost:3000/quizzes/"
+
+const getQuiz = (uniq_code) => {
+    return fetch(`${QUIZ_URL}${uniq_code}`)
+    .then(resp => resp.json())
+};
+
 })

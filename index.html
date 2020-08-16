@@ -9,28 +9,30 @@
     <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>    
 </head>
 <body>
-<div id="main">
+<div id="main" class="hidden_div">
         <h2>Quiz Maker App</h2>
         <p>Create your own Quiz! Share and dicuss</p>
         <button id="create">Create Quiz</button>
         <button id="take">Take Quiz</button>
         <button id="join">Join a Classroom</button>
 </div>
-<div id="create-container">
+<div id="create_container" class="hidden_div">
         <h2>Create Quiz</h2>
-    <div id="quiz-form-container">
-        <form id="main-quiz">
-            <label for="teacher-name">Creator Name:</label>
-            <input type="text" name="teacher-name" maxlength="20"><br>
+    <div id="quiz_form_container" class="hidden_div">
+        <form id="main_quiz">
+            <label for="teacher_name">Creator Name:</label>
+            <input type="text" name="teacher_name" maxlength="20"><br>
             <label for="email">Email Address:</label>
             <input type="text" name="email" maxlength="40"><br>
-            <label for="quiz-title">Quiz title:</label>
-            <input type="text" name="quiz-title" maxlength="40"><br>
+            <label for="quiz_title">Quiz title:</label>
+            <input type="text" name="quiz_title" maxlength="40"><br>
+            <label for="minutes">Time limit:</label>
+            <input type="text" name="minutes" placeholder="Minutes">
             <button type="submit">Next</button>
         </form> 
     </div>
-    <div id="question-form-container">
-        <form id="question-quiz">
+    <div id="question_form_container" class="hidden_div">
+        <form id="question_quiz">
             <label for="question">Question:</label>
             <input type="text" name="question"><br>
             <label for="answer">Answer:</label>
@@ -43,22 +45,28 @@
             <input type="text" name="incorrect3"><br>
             <button type="submit">add question</button><br>
         </form> 
-        <button>Finish</button>
+        <button id="finishform">Finish</button>
     </div>
 </div>
-<div id="take-container">
+<div id="take_container" class="hidden_div">
     <h2>Find by quiz code</h2>
-    <form id="find-quiz">
-        <label for="quiz-unique-code">Quiz Code:</label>
-        <input type="text" id="quiz-unique-code">
+    <form id="find_quiz">
+        <label for="quiz_unique_code">Quiz Code:</label>
+        <input type="text" name="unique_code">
         <button type="submit">Submit</button>
     </form>
 </div>
-<div id="join-container">
-    <div id="chatroom-container"></div>
-    <form id="send-container">
-        <input type="text" id="message-input">
-        <button type="submit" id="send-button">Send</button><br>
+<div id="start_quiz_container" class="hidden_div">
+    <div id="confirm_quiz" class="hidden_div">
+    </div>
+    <div id="questions_container" class="hidden_div">
+    </div>
+</div>
+<div id="join_container" class="hidden_div">
+    <div id="chatroom_container"></div>
+    <form id="send_container">
+        <input type="text" id="message_input">
+        <button type="submit" id="send_button">Send</button><br>
         <label>Welcome to the classroom!</label><br>
         <label>Share and discuss quizzes</label><br>
     </form>
