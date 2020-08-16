@@ -1,40 +1,34 @@
  document.addEventListener("DOMContentLoaded", () => {
     const main = document.getElementById("main")
-
-    // hide the main containers initially (damn this is going to be messy lol)
+    switchHiddenDiv(main)
     const chatroom = document.getElementById("join_container")
-    //chatroom.style.display = "none";
-    test(chatroom)
     const takequiz = document.getElementById("take_container")
-    takequiz.style.display = "none";
     const createquiz = document.getElementById("create_container")
-    createquiz.style.display = "none";
     const startquiz = document.getElementById("start_quiz_container")
-    startquiz.style.display = "none";
     const quizFormContainer = document.getElementById("quiz_form_container")
     const questionFormContainer = document.getElementById("question_form_container")
-    questionFormContainer.style.display = "none";
 
     //main on-click listener
      document.addEventListener("click", e => {
        if(e.target.matches("#join")){
             //hide main div
-            main.style.display = "none";
-            chatroom.style.display = "block";
+            switchHiddenDiv(main)
+            switchHiddenDiv(chatroom)
             //start the server !
             server()
        }else if(e.target.matches("#take")){
             //hide main div
+            switchHiddenDiv(main)
+            switchHiddenDiv(takequiz)
             main.style.display = "none";
             takequiz.style.display = "block";
        }else if(e.target.matches("#create")){
             //hide main div
-            main.style.display = "none";
-            createquiz.style.display = "block";
-       }else if(e.target.getElementById("#finishform")){
-            quizFormContainer.style.display = "none"
-            questionFormContainer.style.display = "block"
-            
+            switchHiddenDiv(main)
+            switchHiddenDiv(createquiz)
+       }else if(e.target.matches("#finishform")){
+            switchHiddenDiv(main)
+            switchHiddenDiv(questionFormContainer)
        }
     }) 
 
@@ -49,7 +43,7 @@
             const uniq_code = e.target.unique_code.value
             getQuiz(uniq_code)
             .then(quiz => {
-                renderQuiz(quiz)
+                debugger
             })
         }else if(e.target.matches("add question")){
             //reset form after submitting to backend 
@@ -67,9 +61,8 @@ const renderQuestion = (question) => {
 }
 
 //helper function
-function test(div){
+function switchHiddenDiv(div){
     //var must be defined globally
-   console.log(div.className)
    return div.className == "hidden_div" ? div.className = "seen_div" : div.className = "hidden_div" 
 }
 
