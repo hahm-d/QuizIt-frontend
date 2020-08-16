@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classroom App</title>
-    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>    
+    <title>Quiz Maker</title>
     <script src="index.js"></script>
     <script src="index.css"></script>
+    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>    
 </head>
 <body>
 <div id="main">
@@ -17,22 +17,41 @@
         <button id="join">Join a Classroom</button>
 </div>
 <div id="create-container">
-    <form id="main-quiz">
-        <label>Create a Quiz</label><br>
-        <label for="teacher-name">Creator Name:</label>
-        <input type="text" id="teacher-name" maxlength="20"><br>
-        <label for="email">Email Address:</label>
-        <input type="text" id="email" maxlength="40"><br>
-        <label for="quiz-title">Quiz title:</label>
-        <input type="text" id="quiz-title" maxlength="40"><br>
-        <button type="submit">Send</button>
-    </form>   
+        <h2>Create Quiz</h2>
+    <div id="quiz-form-container">
+        <form id="main-quiz">
+            <label for="teacher-name">Creator Name:</label>
+            <input type="text" name="teacher-name" maxlength="20"><br>
+            <label for="email">Email Address:</label>
+            <input type="text" name="email" maxlength="40"><br>
+            <label for="quiz-title">Quiz title:</label>
+            <input type="text" name="quiz-title" maxlength="40"><br>
+            <button type="submit">Next</button>
+        </form> 
+    </div>
+    <div id="question-form-container">
+        <form id="question-quiz">
+            <label for="question">Question:</label>
+            <input type="text" name="question"><br>
+            <label for="answer">Answer:</label>
+            <input type="text" name="answer"><br>
+            <label for="incorrect1">Incorrect answer 1:</label>
+            <input type="text" name="incorrect1"><br>
+            <label for="incorrect2">Incorrect answer 2:</label>
+            <input type="text" name="incorrect2"><br>
+            <label for="incorrect3">Incorrect answer 3:</label>
+            <input type="text" name="incorrect3"><br>
+            <button type="submit">add question</button><br>
+        </form> 
+        <button>Finish</button>
+    </div>
 </div>
 <div id="take-container">
+    <h2>Find by quiz code</h2>
     <form id="find-quiz">
-        <label for="quiz-unique-code">Quiz Code:</label><br>
+        <label for="quiz-unique-code">Quiz Code:</label>
         <input type="text" id="quiz-unique-code">
-        <button type="submit">Send</button>
+        <button type="submit">Submit</button>
     </form>
 </div>
 <div id="join-container">

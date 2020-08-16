@@ -1,7 +1,7 @@
  document.addEventListener("DOMContentLoaded", () => {
     const main = document.getElementById("main")
 
-    // hide the containers initially
+    // hide the main containers initially
     const chatroom = document.getElementById("join-container")
     chatroom.style.display = "none";
     const takequiz = document.getElementById("take-container")
@@ -11,7 +11,6 @@
 
     //main on-click listener
      document.addEventListener("click", e => {
-    // note: can use switch cases as well
        if(e.target.matches("#join")){
             //hide main div
             main.style.display = "none";
@@ -22,19 +21,25 @@
             //hide main div
             main.style.display = "none";
             takequiz.style.display = "block";
-
        }else if(e.target.matches("#create")){
             //hide main div
             main.style.display = "none";
             createquiz.style.display = "block";
+            const quizContainer = document.getElementById("quiz-form-container")
+            const questionContainer = document.getElementById("question-form-container")
+            questionContainer.style.display = "none"
        }
     }) 
 
 
     //main form submit
-
-
-
+    document.addEventListener("submit", e => {
+        e.preventDefault()
+        //console.log(e.target)
+        if(e.target.matches("#main-quiz")){
+            console.log(e.target)
+        }
+    })
 
 
 
@@ -45,9 +50,10 @@ const server = () => {
     const messageForm = document.getElementById("send-container")
     const messageInput = document.getElementById("message-input")
     const name = prompt("what is your name?")
-
+    appendMessage('You joined')
 
     socket.emit('new-user', name)
+
 
     socket.on("intro-message", data => {
         appendMessage(data)
