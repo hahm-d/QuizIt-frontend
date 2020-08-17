@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const createquiz = document.getElementById("create_container")
     const quizFormContainer = document.getElementById("quiz_form_container")
     const questionFormContainer = document.getElementById("question_form_container")
-    const confirmQuizBox = document.getElementById("confirm_quiz")
+    let divCount = 1
+    const quizObj = []
 
     //main on-click listener
      document.addEventListener("click", e => {
@@ -14,21 +15,37 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(main)
             switchHiddenDiv(chatroom)
             //server start here after fix
-       }else if(e.target.matches("#take")){
+        }else if(e.target.matches("#take")){
             //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(takequiz)
-       }else if(e.target.matches("#create")){
+        }else if(e.target.matches("#create")){
             //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(createquiz)
-       }else if(e.target.matches("#finishform")){
-            //switchHiddenDiv(main)
-            //switchHiddenDiv(questionFormContainer)
-       }else if (e.target.matches("#btn_confirm_quiz")){
-            switchHiddenDiv(confirmQuizBox)
-            renderQuestion()
-       }
+        }else if(e.target.matches("#add_more")){
+            const newdiv = document.createElement("div")
+            divCount++
+            newdiv.id = divCount.toString() 
+            newdiv.innerHTML = `<label for="question">Question ${newdiv.id}:</label>
+            <input type="text" name="question"><br>
+            <label for="answer">Answer:</label>
+            <input type="text" name="answer"><br>
+            <label for="incorrect1">Incorrect answer 1:</label>
+            <input type="text" name="incorrect1"><br>
+            <label for="incorrect2">Incorrect answer 2:</label>
+            <input type="text" name="incorrect2"><br>
+            <label for="incorrect3">Incorrect answer 3:</label>
+            <input type="text" name="incorrect3"><br>
+            `
+            const addButton = document.getElementById("add_more")
+            const questionParent = document.getElementById("question_quiz")
+            questionParent.insertBefore(newdiv, addButton)
+            //addOnQuestion.append(newdiv)
+        }else if (e.target.matches("#btn_confirm_quiz")){
+        switchHiddenDiv(confirmQuizBox)
+        renderQuestion(quizObj)
+        }
     }) 
 
 
@@ -45,14 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
             getQuiz(uniq_code)
             .then(quiz => {
                 if(quiz !== null){
+                    quizObj.push(quiz)
                     switchHiddenDiv(takequiz)
                     confirmQuiz(quiz)
                 } else {
                     alert("This quiz does not exist")
                 }
             })
-        }else if(e.target.matches("add question")){
-            //append an question div, after submitting to backend 
+        }else if(e.target.matches("#finish_form")){
+            //e.target is question_quiz
+            //for each div, create objs then send to post question
         }
     })
 
