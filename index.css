@@ -6,3 +6,8 @@ div.hidden_div {
 .seen_div {
     display: block;
 }
+
+.textboxid{
+    height:200px;
+    font-size:12pt;
+}

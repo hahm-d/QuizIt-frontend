@@ -49,8 +49,7 @@
                 }
             })
         }else if(e.target.matches("add question")){
-            //reset form after submitting to backend 
-            
+            //append an question div, after submitting to backend 
         }
     })
 
@@ -83,6 +82,7 @@ function randomizer(){
 
 //fetch request
 const QUIZ_URL = "http://localhost:3000/quizzes/"
+const QUESTION_URL = "http://localhost:3000/questions/"
 
 const getQuiz = (uniq_code) => {
     return fetch(`${QUIZ_URL}${uniq_code}`)
@@ -92,7 +92,7 @@ const getQuiz = (uniq_code) => {
 
 const postQuiz = (quiz_obj) => {
     const rando = randomizer()
-    console.log(quiz_obj.teacher_email.value)
+   // console.log(quiz_obj.teacher_email.value)
     const setting = {
         method: "POST",
         headers: {
@@ -115,4 +115,11 @@ const postQuiz = (quiz_obj) => {
     // })
  
 }
+
+const postQuestion = (question_obj) =>{
+
+
+}
+
+
 })
