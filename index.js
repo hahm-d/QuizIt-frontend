@@ -5,8 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const createquiz = document.getElementById("create_container")
     const quizFormContainer = document.getElementById("quiz_form_container")
     const questionFormContainer = document.getElementById("question_form_container")
+    const confirmQuizBox = document.getElementById("confirm_quiz")
+    const questionContainer = document.getElementById("questions_container")
     let divCount = 1
-    const quizObj = []
+    let quizObj = {}
 
     //main on-click listener
      document.addEventListener("click", e => {
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const addButton = document.getElementById("add_more")
             const questionParent = document.getElementById("question_quiz")
             questionParent.insertBefore(newdiv, addButton)
-            //addOnQuestion.append(newdiv)
+
         }else if (e.target.matches("#btn_confirm_quiz")){
         switchHiddenDiv(confirmQuizBox)
         renderQuestion(quizObj)
@@ -62,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
             getQuiz(uniq_code)
             .then(quiz => {
                 if(quiz !== null){
-                    quizObj.push(quiz)
+                    quizObj = quiz
                     switchHiddenDiv(takequiz)
                     confirmQuiz(quiz)
                 } else {
@@ -87,8 +89,12 @@ const confirmQuiz = (quiz) => {
     confirmQuizBox.prepend(quizTitle, quizTeacher)
 }
 
-const renderQuestion = () => {
-
+const renderQuestion = (quizObj) => {
+    switchHiddenDiv(questionContainer)
+    for (question of quizObj.questions){
+        console.log(question)
+        
+    }
 }
 
 //helper function
