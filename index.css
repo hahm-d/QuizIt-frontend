@@ -11,3 +11,11 @@ div.hidden_div {
     height:200px;
     font-size:12pt;
 }
+
+.slide{
+    display: none;
+}
+
+.active-slide{
+    display: block;
+}

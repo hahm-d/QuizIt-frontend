@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizFormContainer = document.getElementById("quiz_form_container")
     const questionFormContainer = document.getElementById("question_form_container")
     const confirmQuizBox = document.getElementById("confirm_quiz")
+    const quizContainer = document.getElementById("quiz_container")
     const questionContainer = document.getElementById("questions_container")
     let divCount = 1
     let quizObj = {}
@@ -90,11 +91,70 @@ const confirmQuiz = (quiz) => {
 }
 
 const renderQuestion = (quizObj) => {
+    switchHiddenDiv(quizContainer)
     switchHiddenDiv(questionContainer)
-    for (question of quizObj.questions){
-        console.log(question)
-        
+    const output = []
+    const questions = quizObj.questions
+    const previousButton = document.getElementById("previous");
+    const nextButton = document.getElementById("next");
+    const submitButton = document.getElementById('submit');
+    questions.forEach(
+        (currentQuestion, questionNumber) => {
+            const choices = [];
+            for (choice of currentQuestion.choices){
+                choices.push(
+                    `<div class="choices">
+                    <input type="radio" name="question${questionNumber}", value="${choice}>
+                    <label for="${choice}>${choice}</label>
+                    </div>`
+                );
+            }
+            output.push(
+                `
+                <div class="slide">
+                    <div class="question"> ${currentQuestion.statement} </div>
+                    ${choices.join('')}
+                </div>`
+            )
+        }
+    )
+    
+    questions_container.innerHTML = output.join('');
+    const slides = document.querySelectorAll(".slide")
+    let currentSlide = 0;
+
+    function showSlide(n) {
+        slides[currentSlide].classList.remove('active-slide');
+        slides[n].classList.add('active-slide');
+        currentSlide = n;
+        if(currentSlide === 0){
+          previousButton.style.display = 'none';
+        }
+        else{
+          previousButton.style.display = 'inline-block';
+        }
+        if(currentSlide === slides.length-1){
+          nextButton.style.display = 'none';
+          submitButton.style.display = 'inline-block';
+        }
+        else{
+          nextButton.style.display = 'inline-block';
+          submitButton.style.display = 'none';
+        }
     }
+
+    showSlide(currentSlide);
+
+    function showNextSlide() {
+        showSlide(currentSlide + 1);
+    }
+      
+    function showPreviousSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+    previousButton.addEventListener("click", showPreviousSlide);
+    nextButton.addEventListener("click", showNextSlide);
 }
 
 //helper function
