@@ -1,11 +1,11 @@
- document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const main = document.getElementById("main")
     const chatroom = document.getElementById("join_container")
     const takequiz = document.getElementById("take_container")
     const createquiz = document.getElementById("create_container")
-    const startquiz = document.getElementById("start_quiz_container")
     const quizFormContainer = document.getElementById("quiz_form_container")
     const questionFormContainer = document.getElementById("question_form_container")
+    const confirmQuizBox = document.getElementById("confirm_quiz")
 
     //main on-click listener
      document.addEventListener("click", e => {
@@ -25,6 +25,9 @@
        }else if(e.target.matches("#finishform")){
             //switchHiddenDiv(main)
             //switchHiddenDiv(questionFormContainer)
+       }else if (e.target.matches("#btn_confirm_quiz")){
+            switchHiddenDiv(confirmQuizBox)
+            renderQuestion()
        }
     }) 
 
@@ -55,7 +58,6 @@
 
 // render the quiz
 const confirmQuiz = (quiz) => {
-    const confirmQuizBox = document.getElementById("confirm_quiz")
     switchHiddenDiv(confirmQuizBox)
     const quizTitle = document.createElement("h2")
     const quizTeacher = document.createElement("p")
@@ -66,7 +68,7 @@ const confirmQuiz = (quiz) => {
     confirmQuizBox.prepend(quizTitle, quizTeacher)
 }
 
-const renderQuestion = (question) => {
+const renderQuestion = () => {
 
 }
 
