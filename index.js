@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const questionContainer = document.getElementById("questions_container")
     let formCount = 1
     let quizObj = {}
+    let newQuizObj = {};
     let newUniqCode;
 
     //main on-click listener
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
             newForm.classList = "each_question"
             newForm.id = formCount.toString() 
             newForm.innerHTML = `
-            <input type="hidden" name="quiz_id" value=${newUniqCode}>
+            <input type="hidden" name="quiz_id" value=${newQuizObj.id}>
             <label for="statement">Question ${newForm.id}:</label>
             <input type="text" name="statement"><br>
             <label for="image">Upload image:</label>
@@ -71,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(quizFormContainer)
             switchHiddenDiv(questionFormContainer)
             const originalForm = document.getElementById("orginalForm")
-            originalForm.value = newUniqCode
+            originalForm.value = newQuizObj.id
         } else if(e.target.matches("#find_quiz")){
             const uniq_code = e.target.unique_code.value
             getQuiz(uniq_code)
@@ -121,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
             (currentQuestion, questionNumber) => {
                 const choices = [];
                 const options = [currentQuestion.answer, currentQuestion.incorrect1, currentQuestion.incorrect2, currentQuestion.incorrect3] 
-                console.log(options)
+                shuffle(options)
                 for (let choice of options){
                     choices.push(
                         `<div class="choices">
@@ -184,8 +185,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return div.className == "hidden_div" ? div.className = "seen_div" : div.className = "hidden_div" 
     }
 
-    function randomizer(){
-        return Math.floor((Math.random() * 100) + 1000);
+    function randomizer(name){
+        const nameArr = name.split(" ")
+        let initials = []
+        nameArr.forEach(returnInitial)
+        function returnInitial(name){
+            initials.push(name[0].toUpperCase())
+        }
+        return initials.join("") + Math.floor((Math.random() * 100) * 222)
     }
 
     function scoring(){
@@ -211,6 +218,25 @@ document.addEventListener("DOMContentLoaded", () => {
         //maybe return the entire slider div with .red / .green style colors with score on next page
     }
 
+    const shuffle = (array) => {
+
+        let currentIndex = array.length;
+        let temporaryValue, randomIndex;
+    
+        while (0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            console.log(randomIndex)
+            currentIndex -= 1;
+    
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+    
+        return array;
+    
+    };
+
 
     //fetch request
     const QUIZ_URL = "http://localhost:3000/quizzes/"
@@ -223,12 +249,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const postQuiz = (quiz_obj) => {
-        const rando = randomizer()
+        const rando = randomizer(quiz_obj.teacher_name.value)
         newUniqCode = rando
         const setting = {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Accept": "application/json"
             },
             body: JSON.stringify({
                 "quizzes": {
@@ -240,8 +267,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             })
         }
-        // return fetch(QUIZ_URL, setting)
-        // .then(resp => resp.json())
+        return fetch(QUIZ_URL, setting)
+        .then(resp => console.log(resp.json()))
         // comment out so I don't send post to create quiz 
     };
 
@@ -256,5 +283,42 @@ document.addEventListener("DOMContentLoaded", () => {
         return fetch(QUESTION_URL, config)
         .then(res => res.json())
     }
-
+    
+    //timer
+    let countdown;
+    const timerDisplay = document.querySelector('.display_time');
+    const endTime = document.querySelector('.display_end');
+    function timer(seconds) {
+        clearInterval(countdown);
+        const now = Date.now();
+        const then = now + seconds * 1000;
+        displayTimeLeft(seconds);
+        displayEndTime(then);
+        countdown = setInterval(() => {
+        const secondsLeft = Math.round((then - Date.now()) / 1000);
+        if(secondsLeft < 0) {
+            clearInterval(countdown);
+            return;
+        }
+        displayTimeLeft(secondsLeft);
+        }, 1000);
+    }
+    function displayTimeLeft(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainderSeconds = seconds % 60;
+        const display = `${minutes}:${remainderSeconds < 10 ? '0' : '' }${remainderSeconds}`;
+        document.title = display;
+        console.log(timerDisplay)
+        timerDisplay.innerText = display;
+    }
+    function displayEndTime(timestamp) {
+        const end = new Date(timestamp);
+        const hour = end.getHours();
+        const adjustedHour = hour > 12 ? hour - 12 : hour;
+        const minutes = end.getMinutes();
+        endTime.textContent = `Quiz Ends at ${adjustedHour}:${minutes < 10 ? '0' : ''}${minutes}`;
+    }
 });
+
+
+
