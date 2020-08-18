@@ -54,6 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
             renderQuestion(quizObj)
         }else if (e.target.matches("#submit_questions")){
             submitQuestions()
+            switchHiddenDiv(confirmQuizBox)
+            renderQuestion(quizObj)
+        }else if (e.target.matches("#submit")){
+            scoring()
+        //switch to next div with results
         }
     }) 
 
@@ -100,38 +105,30 @@ document.addEventListener("DOMContentLoaded", () => {
         quizTeacher.innerText = `Teacher Name: ${quiz.teacher_name}`
 
         confirmQuizBox.prepend(quizTitle, quizTeacher)
-    };
+    }
 
     const renderQuestion = (quizObj) => {
         switchHiddenDiv(quizContainer)
         switchHiddenDiv(questionContainer)
         const output = []
-        const questions = quizObj.questions
+        const questions = quizObj.questions 
         const previousButton = document.getElementById("previous");
         const nextButton = document.getElementById("next");
         const submitButton = document.getElementById('submit');
         questions.forEach(
             (currentQuestion, questionNumber) => {
-                console.log(currentQuestion.image)
                 const choices = [];
                 for (choice of currentQuestion.choices){
                     choices.push(
                         `<div class="choices">
-                        <input type="radio" name="question${questionNumber}", value="${choice}>
-                        <label for="${choice}>${choice}</label>
+                        <input type="radio" name="question${questionNumber}", value="${choice}">
+                        <label for="${choice}">${choice}</label>
                         </div>`
-                    );
+                    )
                 }
-                output.push(
-                    `
-                    <div class="slide">
-                        <div class="question"> ${currentQuestion.statement}</div>
-                        ${choices.join('')}
-                    </div>`
-                )
             }
         )
-        
+            
         questions_container.innerHTML = output.join('');
         const slides = document.querySelectorAll(".slide")
         let currentSlide = 0;
@@ -168,16 +165,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
         previousButton.addEventListener("click", showPreviousSlide);
         nextButton.addEventListener("click", showNextSlide);
-    };
+    }
+
 
     //helper function
     function switchHiddenDiv(div){
-    return div.className == "hidden_div" ? div.className = "seen_div" : div.className = "hidden_div" 
-    };
+        return div.className == "hidden_div" ? div.className = "seen_div" : div.className = "hidden_div" 
+    }
 
     function randomizer(){
         return Math.floor((Math.random() * 100) + 1000);
-    };
+    }
+
+    function scoring(){
+        let correctAnswers = quizObj.questions.map(question => question.answer) 
+        let numCorrect = 0;
+        
+        quizObj.questions.forEach((currentQuestion, questionNumber) => {
+            const answerCon = correctAnswers[questionNumber];
+            const selector = `input[name=question${questionNumber}]:checked`
+            const userAns = (document.querySelector(selector) || {}).value
+
+            if(userAns === answerCon){
+                numCorrect++
+                // color the answers green
+                //answerContainers[questionNumber].style.color = 'lightgreen';
+            }else{
+                // color the answers red
+                //answerContainers[questionNumber].style.color = 'red';
+            }
+            
+        })
+        console.log(`You got ${numCorrect}/${correctAnswers.length}`)   
+        //maybe return the entire slider div with .red / .green style colors with score on next page
+    }
 
 
     //fetch request
@@ -210,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         // return fetch(QUIZ_URL, setting)
         // .then(resp => resp.json())
-
+        // comment out so I don't send post to create quiz 
     };
 
     const postQuestion = formData => {
@@ -224,6 +245,4 @@ document.addEventListener("DOMContentLoaded", () => {
         return fetch(QUESTION_URL, config)
         .then(res => res.json())
     }
-
-
 });
