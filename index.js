@@ -8,8 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmQuizBox = document.getElementById("confirm_quiz")
     const quizContainer = document.getElementById("quiz_container")
     const questionContainer = document.getElementById("questions_container")
-    let divCount = 1
+    let divCount = 0
     let quizObj = {}
+    let newUniqCode;
 
     //main on-click listener
      document.addEventListener("click", e => {
@@ -27,11 +28,16 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(main)
             switchHiddenDiv(createquiz)
         }else if(e.target.matches("#add_more")){
-            const newdiv = document.createElement("div")
+            const newform = document.createElement("form")
             divCount++
-            newdiv.id = divCount.toString() 
-            newdiv.innerHTML = `<label for="question">Question ${newdiv.id}:</label>
-            <input type="text" name="question"><br>
+            newform.classList = "each_question"
+            newform.id = divCount.toString() 
+            newform.innerHTML = `
+            <input type="hidden" name="quiz_id" value="a1b2c3">
+            <label for="statement">Question ${newform.id}:</label>
+            <input type="text" name="statement"><br>
+            <label for="image">Upload image:</label>
+            <input type="file" name="image"/><br>
             <label for="answer">Answer:</label>
             <input type="text" name="answer"><br>
             <label for="incorrect1">Incorrect answer 1:</label>
@@ -41,16 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
             <label for="incorrect3">Incorrect answer 3:</label>
             <input type="text" name="incorrect3"><br>
             `
-            const addButton = document.getElementById("add_more")
+            const submitButton = document.getElementById("submit_questions")
             const questionParent = document.getElementById("question_quiz")
-            questionParent.insertBefore(newdiv, addButton)
-
+            questionParent.insertBefore(newform, submitButton)
         }else if (e.target.matches("#btn_confirm_quiz")){
-        switchHiddenDiv(confirmQuizBox)
-        renderQuestion(quizObj)
+            switchHiddenDiv(confirmQuizBox)
+            renderQuestion(quizObj)
+        }else if (e.target.matches("#submit_questions")){
+            submitQuestions()
         }
     }) 
-
 
     //main form submit
     document.addEventListener("submit", e => {
@@ -72,11 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert("This quiz does not exist")
                 }
             })
-        }else if(e.target.matches("#finish_form")){
-            //e.target is question_quiz
-            //for each div, create objs then send to post question
         }
     })
+
+    function submitQuestions(){
+        const questionForms = document.querySelectorAll(".each_question")
+        for (let form of questionForms){
+            const formData = new FormData(form)
+            postQuestion(formData)
+        }
+    }
 
 // render the quiz
 const confirmQuiz = (quiz) => {
@@ -100,6 +111,7 @@ const renderQuestion = (quizObj) => {
     const submitButton = document.getElementById('submit');
     questions.forEach(
         (currentQuestion, questionNumber) => {
+            console.log(currentQuestion.image)
             const choices = [];
             for (choice of currentQuestion.choices){
                 choices.push(
@@ -112,7 +124,7 @@ const renderQuestion = (quizObj) => {
             output.push(
                 `
                 <div class="slide">
-                    <div class="question"> ${currentQuestion.statement} </div>
+                    <div class="question"> ${currentQuestion.statement}</div>
                     ${choices.join('')}
                 </div>`
             )
@@ -179,7 +191,7 @@ const getQuiz = (uniq_code) => {
 
 const postQuiz = (quiz_obj) => {
     const rando = randomizer()
-   // console.log(quiz_obj.teacher_email.value)
+    newUniqCode = rando
     const setting = {
         method: "POST",
         headers: {
@@ -197,16 +209,20 @@ const postQuiz = (quiz_obj) => {
     }
     // return fetch(QUIZ_URL, setting)
     // .then(resp => resp.json())
-    // .then((quiz_obj) => {
-    //     let createdQuiz = quiz_obj
-    // })
  
 }
 
-const postQuestion = (question_obj) =>{
-
-
-}
+const postQuestion = formData => {
+    const config = {
+      method: "POST",
+      headers: {
+        "Accept": "application/json"
+      },
+      body: formData
+    }
+    return fetch(QUESTION_URL, config)
+      .then(res => res.json())
+  }
 
 
 })
