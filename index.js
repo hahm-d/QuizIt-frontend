@@ -108,8 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const renderQuestion = (quizObj) => {
-        //display timer
-        //timer(quizObj.time_limit * 60)
+        // display timer
+        // timer(quizObj.time_limit * 60)
         switchHiddenDiv(quizContainer)
         switchHiddenDiv(questionContainer)
         const output = []
@@ -120,7 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
         questions.forEach(
             (currentQuestion, questionNumber) => {
                 const choices = [];
-                for (choice of currentQuestion.choices){
+                const options = [currentQuestion.answer, currentQuestion.incorrect1, currentQuestion.incorrect2, currentQuestion.incorrect3] 
+                console.log(options)
+                for (let choice of options){
                     choices.push(
                         `<div class="choices">
                         <input type="radio" name="question${questionNumber}", value="${choice}">
@@ -254,4 +256,5 @@ document.addEventListener("DOMContentLoaded", () => {
         return fetch(QUESTION_URL, config)
         .then(res => res.json())
     }
+
 });
