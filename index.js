@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(main)
             confirmQuizBox.children[0].remove()
             confirmQuizBox.children[0].remove()
+            confirmQuizBox.children[0].remove()
         }else if (e.target.matches("#submit_questions")){
             submitQuestions()
         }else if (e.target.matches("#submit")){
@@ -205,25 +206,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function scoring(){
         let correctAnswers = quizObj.questions.map(question => question.answer) 
+
         let numCorrect = 0;
-        
+        const findTable = document.getElementById("ResultTable")
+        //quizResult
         quizObj.questions.forEach((currentQuestion, questionNumber) => {
             const answerCon = correctAnswers[questionNumber];
             const selector = `input[name=question${questionNumber}]:checked`
             const userAns = (document.querySelector(selector) || {}).value
-
+            let row = findTable.insertRow(questionNumber + 1)
+            row.insertCell(0).innerHTML = questionNumber + 1
+            row.insertCell(1).innerHTML = currentQuestion.statement
+            row.insertCell(2).innerHTML = userAns
+            row.insertCell(3).innerHTML = answerCon
             if(userAns === answerCon){
                 numCorrect++
-                // color the answers green
-                //answerContainers[questionNumber].style.color = 'lightgreen';
-            }else{
-                // color the answers red
-                //answerContainers[questionNumber].style.color = 'red';
             }
-            
+
         })
-        return `Score: ${numCorrect}/${correctAnswers.length}`   
-        //maybe return the entire slider div with .red / .green style colors with score on next page
+        //percentage calcuator
+        const percentage = (numCorrect / correctAnswers.length) * 100
+        let resultValue = document.createElement("div")
+        resultValue.innerHTML = `
+        <h3 id="user_score_value">Score: ${numCorrect}/${correctAnswers.length}</h3>
+        <h1 id="user_percent_value">${percentage}%</h1>`
+        quizResult.append(resultValue)
     }
 
     const shuffle = (array) => {
