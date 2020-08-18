@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatroom = document.getElementById("join_container")
     const takequiz = document.getElementById("take_container")
     const createquiz = document.getElementById("create_container")
+    const quizResult = document.getElementById("quiz_result_container")
     const quizFormContainer = document.getElementById("quiz_form_container")
     const questionFormContainer = document.getElementById("question_form_container")
     const confirmQuizBox = document.getElementById("confirm_quiz")
@@ -53,13 +54,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }else if (e.target.matches("#btn_confirm_quiz")){
             switchHiddenDiv(confirmQuizBox)
             renderQuestion(quizObj)
+        }else if (e.target.matches("#btn_cancel_quiz")){
+            switchHiddenDiv(confirmQuizBox)
+            switchHiddenDiv(main)
+            confirmQuizBox.children[0].remove()
+            confirmQuizBox.children[0].remove()
         }else if (e.target.matches("#submit_questions")){
             submitQuestions()
             switchHiddenDiv(confirmQuizBox)
             renderQuestion(quizObj)
         }else if (e.target.matches("#submit")){
-            scoring()
-        //switch to next div with results
+        scoring()
+        switchHiddenDiv(quizResult)
+        switchHiddenDiv(quizContainer)
+
         }
     }) 
 
@@ -110,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const renderQuestion = (quizObj) => {
         // display timer
-        // timer(quizObj.time_limit * 60)
+        timer(quizObj.time_limit * 60)
         switchHiddenDiv(quizContainer)
         switchHiddenDiv(questionContainer)
         const output = []
@@ -214,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             
         })
-        console.log(`You got ${numCorrect}/${correctAnswers.length}`)   
+        return `Score: ${numCorrect}/${correctAnswers.length}`   
         //maybe return the entire slider div with .red / .green style colors with score on next page
     }
 
@@ -308,7 +316,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const remainderSeconds = seconds % 60;
         const display = `${minutes}:${remainderSeconds < 10 ? '0' : '' }${remainderSeconds}`;
         document.title = display;
-        console.log(timerDisplay)
         timerDisplay.innerText = display;
     }
     function displayEndTime(timestamp) {
