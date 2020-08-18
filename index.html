@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Maker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
     <script src="index.js"></script>  
 </head>
@@ -31,9 +32,22 @@
         </form> 
     </div>
     <div id="question_form_container" class="hidden_div">
-        <div id="question_quiz">
-            <button type="button" id="submit_questions">Submit</button>
-        </div> 
+        <form class="each_question" id="1">
+            <input type="hidden" name="quiz_id" id="orginalForm" value="">
+            <label for="statement">Question 1:</label>
+            <input type="text" name="statement"><br>
+            <label for="image">Upload image:</label>
+            <input type="file" name="image"/><br>
+            <label for="answer">Answer:</label>
+            <input type="text" name="answer"><br>
+            <label for="incorrect1">Incorrect answer 1:</label>
+            <input type="text" name="incorrect1"><br>
+            <label for="incorrect2">Incorrect answer 2:</label>
+            <input type="text" name="incorrect2"><br>
+            <label for="incorrect3">Incorrect answer 3:</label>
+            <input type="text" name="incorrect3"><br>
+        </form>
+        <button type="button" id="submit_questions">Submit</button>
         <button id="add_more">add question</button>
     </div>
 </div>

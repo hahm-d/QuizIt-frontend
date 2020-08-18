@@ -8,13 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmQuizBox = document.getElementById("confirm_quiz")
     const quizContainer = document.getElementById("quiz_container")
     const questionContainer = document.getElementById("questions_container")
-    let divCount = 0
+    let formCount = 1
     let quizObj = {}
     let newUniqCode;
 
     //main on-click listener
-     document.addEventListener("click", e => {
-       if(e.target.matches("#join")){
+    document.addEventListener("click", e => {
+        if(e.target.matches("#join")){
             //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(chatroom)
@@ -28,13 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(main)
             switchHiddenDiv(createquiz)
         }else if(e.target.matches("#add_more")){
-            const newform = document.createElement("form")
-            divCount++
-            newform.classList = "each_question"
-            newform.id = divCount.toString() 
-            newform.innerHTML = `
-            <input type="hidden" name="quiz_id" value="a1b2c3">
-            <label for="statement">Question ${newform.id}:</label>
+            const newForm = document.createElement("form")
+            formCount++
+            newForm.classList = "each_question"
+            newForm.id = formCount.toString() 
+            newForm.innerHTML = `
+            <input type="hidden" name="quiz_id" value=${newUniqCode}>
+            <label for="statement">Question ${newForm.id}:</label>
             <input type="text" name="statement"><br>
             <label for="image">Upload image:</label>
             <input type="file" name="image"/><br>
@@ -48,8 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <input type="text" name="incorrect3"><br>
             `
             const submitButton = document.getElementById("submit_questions")
-            const questionParent = document.getElementById("question_quiz")
-            questionParent.insertBefore(newform, submitButton)
+            questionFormContainer.insertBefore(newForm, submitButton)
         }else if (e.target.matches("#btn_confirm_quiz")){
             switchHiddenDiv(confirmQuizBox)
             renderQuestion(quizObj)
@@ -66,6 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
             postQuiz(e.target)
             switchHiddenDiv(quizFormContainer)
             switchHiddenDiv(questionFormContainer)
+            const originalForm = document.getElementById("orginalForm")
+            originalForm.value = newUniqCode
         } else if(e.target.matches("#find_quiz")){
             const uniq_code = e.target.unique_code.value
             getQuiz(uniq_code)
@@ -87,142 +88,142 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(form)
             postQuestion(formData)
         }
-    }
+    };
 
-// render the quiz
-const confirmQuiz = (quiz) => {
-    switchHiddenDiv(confirmQuizBox)
-    const quizTitle = document.createElement("h2")
-    const quizTeacher = document.createElement("p")
-    
-    quizTitle.innerText = `${quiz.title}`
-    quizTeacher.innerText = `Teacher Name: ${quiz.teacher_name}`
+    // render the quiz
+    const confirmQuiz = (quiz) => {
+        switchHiddenDiv(confirmQuizBox)
+        const quizTitle = document.createElement("h2")
+        const quizTeacher = document.createElement("p")
+        
+        quizTitle.innerText = `${quiz.title}`
+        quizTeacher.innerText = `Teacher Name: ${quiz.teacher_name}`
 
-    confirmQuizBox.prepend(quizTitle, quizTeacher)
-}
+        confirmQuizBox.prepend(quizTitle, quizTeacher)
+    };
 
-const renderQuestion = (quizObj) => {
-    switchHiddenDiv(quizContainer)
-    switchHiddenDiv(questionContainer)
-    const output = []
-    const questions = quizObj.questions
-    const previousButton = document.getElementById("previous");
-    const nextButton = document.getElementById("next");
-    const submitButton = document.getElementById('submit');
-    questions.forEach(
-        (currentQuestion, questionNumber) => {
-            console.log(currentQuestion.image)
-            const choices = [];
-            for (choice of currentQuestion.choices){
-                choices.push(
-                    `<div class="choices">
-                    <input type="radio" name="question${questionNumber}", value="${choice}>
-                    <label for="${choice}>${choice}</label>
+    const renderQuestion = (quizObj) => {
+        switchHiddenDiv(quizContainer)
+        switchHiddenDiv(questionContainer)
+        const output = []
+        const questions = quizObj.questions
+        const previousButton = document.getElementById("previous");
+        const nextButton = document.getElementById("next");
+        const submitButton = document.getElementById('submit');
+        questions.forEach(
+            (currentQuestion, questionNumber) => {
+                console.log(currentQuestion.image)
+                const choices = [];
+                for (choice of currentQuestion.choices){
+                    choices.push(
+                        `<div class="choices">
+                        <input type="radio" name="question${questionNumber}", value="${choice}>
+                        <label for="${choice}>${choice}</label>
+                        </div>`
+                    );
+                }
+                output.push(
+                    `
+                    <div class="slide">
+                        <div class="question"> ${currentQuestion.statement}</div>
+                        ${choices.join('')}
                     </div>`
-                );
+                )
             }
-            output.push(
-                `
-                <div class="slide">
-                    <div class="question"> ${currentQuestion.statement}</div>
-                    ${choices.join('')}
-                </div>`
-            )
+        )
+        
+        questions_container.innerHTML = output.join('');
+        const slides = document.querySelectorAll(".slide")
+        let currentSlide = 0;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active-slide');
+            slides[n].classList.add('active-slide');
+            currentSlide = n;
+            if(currentSlide === 0){
+            previousButton.style.display = 'none';
+            }
+            else{
+            previousButton.style.display = 'inline-block';
+            }
+            if(currentSlide === slides.length-1){
+            nextButton.style.display = 'none';
+            submitButton.style.display = 'inline-block';
+            }
+            else{
+            nextButton.style.display = 'inline-block';
+            submitButton.style.display = 'none';
+            }
         }
-    )
-    
-    questions_container.innerHTML = output.join('');
-    const slides = document.querySelectorAll(".slide")
-    let currentSlide = 0;
 
-    function showSlide(n) {
-        slides[currentSlide].classList.remove('active-slide');
-        slides[n].classList.add('active-slide');
-        currentSlide = n;
-        if(currentSlide === 0){
-          previousButton.style.display = 'none';
+        showSlide(currentSlide);
+
+        function showNextSlide() {
+            showSlide(currentSlide + 1);
         }
-        else{
-          previousButton.style.display = 'inline-block';
+        
+        function showPreviousSlide() {
+            showSlide(currentSlide - 1);
         }
-        if(currentSlide === slides.length-1){
-          nextButton.style.display = 'none';
-          submitButton.style.display = 'inline-block';
+
+        previousButton.addEventListener("click", showPreviousSlide);
+        nextButton.addEventListener("click", showNextSlide);
+    };
+
+    //helper function
+    function switchHiddenDiv(div){
+    return div.className == "hidden_div" ? div.className = "seen_div" : div.className = "hidden_div" 
+    };
+
+    function randomizer(){
+        return Math.floor((Math.random() * 100) + 1000);
+    };
+
+
+    //fetch request
+    const QUIZ_URL = "http://localhost:3000/quizzes/"
+    const QUESTION_URL = "http://localhost:3000/questions/"
+
+    const getQuiz = (uniq_code) => {
+        return fetch(`${QUIZ_URL}${uniq_code}`)
+        .then(resp => resp.json())
+    };
+
+
+    const postQuiz = (quiz_obj) => {
+        const rando = randomizer()
+        newUniqCode = rando
+        const setting = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "quizzes": {
+                "unique_code": rando,
+                "teacher_name": quiz_obj.teacher_name.value,
+                "teacher_email": quiz_obj.teacher_email.value,
+                "title": quiz_obj.quiz_title.value,
+                "time_limit": quiz_obj.timer.value
+                }
+            })
         }
-        else{
-          nextButton.style.display = 'inline-block';
-          submitButton.style.display = 'none';
-        }
-    }
+        // return fetch(QUIZ_URL, setting)
+        // .then(resp => resp.json())
 
-    showSlide(currentSlide);
+    };
 
-    function showNextSlide() {
-        showSlide(currentSlide + 1);
-    }
-      
-    function showPreviousSlide() {
-        showSlide(currentSlide - 1);
-    }
-
-    previousButton.addEventListener("click", showPreviousSlide);
-    nextButton.addEventListener("click", showNextSlide);
-}
-
-//helper function
-function switchHiddenDiv(div){
-   return div.className == "hidden_div" ? div.className = "seen_div" : div.className = "hidden_div" 
-}
-
-function randomizer(){
-    return Math.floor((Math.random() * 100) + 1000);
-}
-
-
-//fetch request
-const QUIZ_URL = "http://localhost:3000/quizzes/"
-const QUESTION_URL = "http://localhost:3000/questions/"
-
-const getQuiz = (uniq_code) => {
-    return fetch(`${QUIZ_URL}${uniq_code}`)
-    .then(resp => resp.json())
-};
-
-
-const postQuiz = (quiz_obj) => {
-    const rando = randomizer()
-    newUniqCode = rando
-    const setting = {
+    const postQuestion = formData => {
+        const config = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Accept": "application/json"
         },
-        body: JSON.stringify({
-            "quizzes": {
-            "unique_code": rando,
-            "teacher_name": quiz_obj.teacher_name.value,
-            "teacher_email": quiz_obj.teacher_email.value,
-            "title": quiz_obj.quiz_title.value,
-            "time_limit": quiz_obj.timer.value
-            }
-        })
+        body: formData
+        }
+        return fetch(QUESTION_URL, config)
+        .then(res => res.json())
     }
-    // return fetch(QUIZ_URL, setting)
-    // .then(resp => resp.json())
- 
-}
-
-const postQuestion = formData => {
-    const config = {
-      method: "POST",
-      headers: {
-        "Accept": "application/json"
-      },
-      body: formData
-    }
-    return fetch(QUESTION_URL, config)
-      .then(res => res.json())
-  }
 
 
-})
+});

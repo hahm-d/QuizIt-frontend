@@ -1,6 +1,5 @@
-div.hidden_div {
+.hidden_div {
     display: none;
-    background-color: aqua;
 }
 
 .seen_div {
