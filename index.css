@@ -1,10 +1,29 @@
+body{
+    align-items: center;
+    height: 100%;
+}
+
+.container {
+    position: relative;
+}
 .hidden_div {
     display: none;
 }
-
 .seen_div {
     display: block;
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
 }
+
+.display{
+    text-align: center;
+}
+
+/* button {
+    background-color: aqua;
+} */
 
 .textboxid{
     height:200px;

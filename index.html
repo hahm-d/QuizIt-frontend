@@ -10,83 +10,85 @@
     <script src="timer.js"></script> 
 </head>
 <body>
-<div id="main" class="seen_div">
-        <h2>Quiz Maker App</h2>
-        <p>Create your own Quiz! Share and dicuss</p>
-        <button id="create">Create Quiz</button>
-        <button id="take">Take Quiz</button>
-        <button id="join">Join a Classroom</button>
-</div>
-<div id="create_container" class="hidden_div">
-        <h2>Create Quiz</h2>
-    <div id="quiz_form_container" class="seen_div">
-        <form id="main_quiz">
-            <label for="teacher_name">Creator Name:</label>
-            <input type="text" name="teacher_name" maxlength="20"><br>
-            <label for="email">Email Address:</label>
-            <input type="text" name="teacher_email" maxlength="40"><br>
-            <label for="quiz_title">Quiz title:</label>
-            <input type="text" name="quiz_title" maxlength="40"><br>
-            <label for="timer">Time limit:</label>
-            <input type="number" name="timer" placeholder="Minutes">
-            <button type="submit">Next</button>
-        </form> 
+<div class="conatiner">
+    <div id="main" class="seen_div">
+            <h2>Quiz Maker App</h2>
+            <p>Create your own Quiz! Share and dicuss</p>
+            <button id="create">Create Quiz</button>
+            <button id="take">Take Quiz</button>
+            <button id="join">Join a Classroom</button>
     </div>
-    <div id="question_form_container" class="hidden_div">
-        <form class="each_question" id="1">
-            <input type="hidden" name="quiz_id" id="orginalForm" value="">
-            <label for="statement">Question 1:</label>
-            <input type="text" name="statement"><br>
-            <label for="image">Upload image:</label>
-            <input type="file" name="image"/><br>
-            <label for="answer">Answer:</label>
-            <input type="text" name="answer"><br>
-            <label for="incorrect1">Incorrect answer 1:</label>
-            <input type="text" name="incorrect1"><br>
-            <label for="incorrect2">Incorrect answer 2:</label>
-            <input type="text" name="incorrect2"><br>
-            <label for="incorrect3">Incorrect answer 3:</label>
-            <input type="text" name="incorrect3"><br>
+    <div id="create_container" class="hidden_div">
+            <h2>Create Quiz</h2>
+        <div id="quiz_form_container" class="seen_div">
+            <form id="main_quiz">
+                <label for="teacher_name">Creator Name:</label>
+                <input type="text" name="teacher_name" maxlength="20"><br>
+                <label for="email">Email Address:</label>
+                <input type="text" name="teacher_email" maxlength="40"><br>
+                <label for="quiz_title">Quiz title:</label>
+                <input type="text" name="quiz_title" maxlength="40"><br>
+                <label for="timer">Time limit:</label>
+                <input type="number" name="timer" placeholder="Minutes">
+                <button type="submit">Next</button>
+            </form> 
+        </div>
+        <div id="question_form_container" class="hidden_div">
+            <form class="each_question" id="1">
+                <input type="hidden" name="quiz_id" id="orginalForm" value="">
+                <label for="statement">Question 1:</label>
+                <input type="text" name="statement"><br>
+                <label for="image">Upload image:</label>
+                <input type="file" name="image"/><br>
+                <label for="answer">Answer:</label>
+                <input type="text" name="answer"><br>
+                <label for="incorrect1">Incorrect answer 1:</label>
+                <input type="text" name="incorrect1"><br>
+                <label for="incorrect2">Incorrect answer 2:</label>
+                <input type="text" name="incorrect2"><br>
+                <label for="incorrect3">Incorrect answer 3:</label>
+                <input type="text" name="incorrect3"><br>
+            </form>
+            <button type="button" id="submit_questions">Submit</button>
+            <button id="add_more">add question</button>
+        </div>
+    </div>
+    <div id="take_container" class="hidden_div">
+        <h2>Find by quiz code</h2>
+        <form id="find_quiz">
+            <label for="quiz_unique_code">Quiz Code:</label>
+            <input type="text" name="unique_code">
+            <button type="submit">Submit</button>
         </form>
-        <button type="button" id="submit_questions">Submit</button>
-        <button id="add_more">add question</button>
     </div>
-</div>
-<div id="take_container" class="hidden_div">
-    <h2>Find by quiz code</h2>
-    <form id="find_quiz">
-        <label for="quiz_unique_code">Quiz Code:</label>
-        <input type="text" name="unique_code">
-        <button type="submit">Submit</button>
-    </form>
-</div>
-<div id="confirm_quiz" class="hidden_div">
-    <p>Is this your quiz?</p><br>
-    <button id="btn_confirm_quiz">Yes</button>
-    <button id="btn_cancel_quiz">Cancel</button>
-</div>
-<div id="quiz_container" class="hidden_div">
-    <div class="display">
-        <p class="display_time"></p>
-        <p class="display_end"></p>
+    <div id="confirm_quiz" class="hidden_div">
+        <p>Is this your quiz?</p><br>
+        <button id="btn_confirm_quiz">Yes</button>
+        <button id="btn_cancel_quiz">Cancel</button>
     </div>
-    <div id="questions_container" class="hidden_div">
+    <div id="quiz_container" class="hidden_div">
+        <div class="display">
+            <p class="display_time"></p>
+            <p class="display_end"></p>
+        </div>
+        <div id="questions_container" class="hidden_div">
+        </div>
+        <button id="previous">Previous Question</button>
+        <button id="next">Next Question</button>
+        <button id="submit">Submit Quiz</button>
     </div>
-    <button id="previous">Previous Question</button>
-    <button id="next">Next Question</button>
-    <button id="submit">Submit Quiz</button>
-</div>
-<div id="quiz_result_container" class="hidden_div">
-    
-</div>
-<div id="join_container" class="hidden_div">
-    <div id="chatroom_container"></div>
-    <form id="send_container">
-        <input type="text" id="message_input">
-        <button type="submit" id="send_button">Send</button><br>
-        <label>Welcome to the classroom!</label><br>
-        <label>Share and discuss quizzes</label><br>
-    </form>
+    <div id="quiz_result_container" class="hidden_div">
+        
+    </div>
+    <div id="join_container" class="hidden_div">
+        <div id="chatroom_container"></div>
+        <form id="send_container">
+            <input type="text" id="message_input">
+            <button type="submit" id="send_button">Send</button><br>
+            <label>Welcome to the classroom!</label><br>
+            <label>Share and discuss quizzes</label><br>
+        </form>
+    </div>
 </div>
 </body>
 </html>

@@ -10,8 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizContainer = document.getElementById("quiz_container")
     const questionContainer = document.getElementById("questions_container")
     let formCount = 1
-    let quizObj = {}
-    let newQuizObj = {};
+    let newQuizObj = {}
     let newUniqCode;
 
     //main on-click listener
@@ -53,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             questionFormContainer.insertBefore(newForm, submitButton)
         }else if (e.target.matches("#btn_confirm_quiz")){
             switchHiddenDiv(confirmQuizBox)
-            renderQuestion(quizObj)
+            getQuestions(quizObj.id).then(renderQuestion)
         }else if (e.target.matches("#btn_cancel_quiz")){
             switchHiddenDiv(confirmQuizBox)
             switchHiddenDiv(main)
@@ -61,13 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
             confirmQuizBox.children[0].remove()
         }else if (e.target.matches("#submit_questions")){
             submitQuestions()
-            switchHiddenDiv(confirmQuizBox)
-            renderQuestion(quizObj)
         }else if (e.target.matches("#submit")){
-        scoring()
-        switchHiddenDiv(quizResult)
-        switchHiddenDiv(quizContainer)
-
+            scoring()
+            switchHiddenDiv(quizResult)
+            switchHiddenDiv(quizContainer)
         }
     }) 
 
@@ -77,10 +73,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if(e.target.matches("#main_quiz")){
             //create the object and send to backend API 
             postQuiz(e.target)
+            .then(quiz => {
+                newQuizObj = quiz
+                const originalForm = document.getElementById("orginalForm")
+                originalForm.value = newQuizObj.id
+            })
             switchHiddenDiv(quizFormContainer)
             switchHiddenDiv(questionFormContainer)
-            const originalForm = document.getElementById("orginalForm")
-            originalForm.value = newQuizObj.id
         } else if(e.target.matches("#find_quiz")){
             const uniq_code = e.target.unique_code.value
             getQuiz(uniq_code)
@@ -116,17 +115,17 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmQuizBox.prepend(quizTitle, quizTeacher)
     }
 
-    const renderQuestion = (quizObj) => {
+    const renderQuestion = (questionObj) => {
+        console.log(questionObj)
         // display timer
         timer(quizObj.time_limit * 60)
         switchHiddenDiv(quizContainer)
         switchHiddenDiv(questionContainer)
         const output = []
-        const questions = quizObj.questions 
         const previousButton = document.getElementById("previous");
         const nextButton = document.getElementById("next");
         const submitButton = document.getElementById('submit');
-        questions.forEach(
+        questionObj.forEach(
             (currentQuestion, questionNumber) => {
                 const choices = [];
                 const options = [currentQuestion.answer, currentQuestion.incorrect1, currentQuestion.incorrect2, currentQuestion.incorrect3] 
@@ -143,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     `
                     <div class="slide">
                         <div class="question"> ${currentQuestion.statement} </div>
+                        <imgtag ${currentQuestion.image} width="100%">
                         ${choices.join('')}
                     </div>`
                 )
@@ -233,7 +233,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
         while (0 !== currentIndex) {
             randomIndex = Math.floor(Math.random() * currentIndex);
-            console.log(randomIndex)
             currentIndex -= 1;
     
             temporaryValue = array[currentIndex];
@@ -255,18 +254,22 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(resp => resp.json())
     };
 
+    const getQuestions = (quiz_id) => {
+        return fetch(`${QUESTION_URL}${quiz_id}`)
+        .then(resp => resp.json())
+    };
 
     const postQuiz = (quiz_obj) => {
         const rando = randomizer(quiz_obj.teacher_name.value)
         newUniqCode = rando
-        const setting = {
+        let setting = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
             body: JSON.stringify({
-                "quizzes": {
+                "quizzes":{
                 "unique_code": rando,
                 "teacher_name": quiz_obj.teacher_name.value,
                 "teacher_email": quiz_obj.teacher_email.value,
@@ -276,16 +279,13 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         }
         return fetch(QUIZ_URL, setting)
-        .then(resp => console.log(resp.json()))
+        .then(resp => resp.json())
         // comment out so I don't send post to create quiz 
     };
 
     const postQuestion = formData => {
         const config = {
         method: "POST",
-        headers: {
-            "Accept": "application/json"
-        },
         body: formData
         }
         return fetch(QUESTION_URL, config)
