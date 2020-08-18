@@ -204,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return initials.join("") + Math.floor((Math.random() * 100) * 222)
     }
 
+
     function scoring(){
         let correctAnswers = quizObj.questions.map(question => question.answer) 
 
@@ -322,7 +323,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const minutes = Math.floor(seconds / 60);
         const remainderSeconds = seconds % 60;
         const display = `${minutes}:${remainderSeconds < 10 ? '0' : '' }${remainderSeconds}`;
-        document.title = display;
         timerDisplay.innerText = display;
     }
     function displayEndTime(timestamp) {
@@ -332,6 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const minutes = end.getMinutes();
         endTime.textContent = `Quiz Ends at ${adjustedHour}:${minutes < 10 ? '0' : ''}${minutes}`;
     }
+
 });
 
 
