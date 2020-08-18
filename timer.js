@@ -1,13 +1,8 @@
-//creating test functions here for now 
-/* 
-<div class="display_time">
-  <h1 id="display_time_left"></h1>
-  <p id="display_end_time"></p>
-</div>
-*/
-
 
 //function for timer
+const timerDisplay = document.querySelector('.display_time_left');
+const endTime = document.querySelector('.display_end_time');
+
 function timer(seconds) {
     clearInterval(countdown);
     const now = Date.now();

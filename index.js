@@ -108,6 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const renderQuestion = (quizObj) => {
+        //display timer
+        //timer(quizObj.time_limit * 60)
         switchHiddenDiv(quizContainer)
         switchHiddenDiv(questionContainer)
         const output = []
@@ -126,6 +128,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>`
                     )
                 }
+                output.push(
+                    `
+                    <div class="slide">
+                        <div class="question"> ${currentQuestion.statement} </div>
+                        ${choices.join('')}
+                    </div>`
+                )
             }
         )
             
