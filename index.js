@@ -48,6 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }else if (e.target.matches("#btn_confirm_quiz")){
         switchHiddenDiv(confirmQuizBox)
         renderQuestion(quizObj)
+        }else if (e.target.matches("#submit")){
+        scoring()
+        //switch to next div with results
         }
     }) 
 
@@ -94,7 +97,7 @@ const renderQuestion = (quizObj) => {
     switchHiddenDiv(quizContainer)
     switchHiddenDiv(questionContainer)
     const output = []
-    const questions = quizObj.questions
+    const questions = quizObj.questions 
     const previousButton = document.getElementById("previous");
     const nextButton = document.getElementById("next");
     const submitButton = document.getElementById('submit');
@@ -104,8 +107,8 @@ const renderQuestion = (quizObj) => {
             for (choice of currentQuestion.choices){
                 choices.push(
                     `<div class="choices">
-                    <input type="radio" name="question${questionNumber}", value="${choice}>
-                    <label for="${choice}>${choice}</label>
+                    <input type="radio" name="question${questionNumber}", value="${choice}">
+                    <label for="${choice}">${choice}</label>
                     </div>`
                 );
             }
@@ -164,6 +167,29 @@ function switchHiddenDiv(div){
 
 function randomizer(){
     return Math.floor((Math.random() * 100) + 1000);
+}
+
+function scoring(){
+    let correctAnswers = quizObj.questions.map(question => question.answer) 
+    let numCorrect = 0;
+    
+    quizObj.questions.forEach((currentQuestion, questionNumber) => {
+        const answerCon = correctAnswers[questionNumber];
+        const selector = `input[name=question${questionNumber}]:checked`
+        const userAns = (document.querySelector(selector) || {}).value
+
+        if(userAns === answerCon){
+            numCorrect++
+            // color the answers green
+            //answerContainers[questionNumber].style.color = 'lightgreen';
+        }else{
+            // color the answers red
+            //answerContainers[questionNumber].style.color = 'red';
+        }
+        
+    })
+     console.log(`You got ${numCorrect}/${correctAnswers.length}`)   
+     //maybe return the entire slider div with .red / .green style colors with score on next page
 }
 
 
