@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatroom = document.getElementById("join_container")
     const takequiz = document.getElementById("take_container")
     const createquiz = document.getElementById("create_container")
+    const finishcreate = document.getElementById("finished_form_container")
     const quizResult = document.getElementById("quiz_result_container")
     const quizFormContainer = document.getElementById("quiz_form_container")
     const questionFormContainer = document.getElementById("question_form_container")
@@ -61,11 +62,15 @@ document.addEventListener("DOMContentLoaded", () => {
             confirmQuizBox.children[0].remove()
             confirmQuizBox.children[0].remove()
         }else if (e.target.matches("#submit_questions")){
+            switchHiddenDiv(createquiz)
+            switchHiddenDiv(finishcreate)
             submitQuestions()
         }else if (e.target.matches("#submit")){
-            scoring()
             switchHiddenDiv(quizResult)
             switchHiddenDiv(quizContainer)
+            scoring()
+        }else if (e.target.matches("#back_home")){
+            location.reload();
         }
     }) 
 
@@ -98,11 +103,18 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     function submitQuestions(){
+        console.log(finishcreate)
         const questionForms = document.querySelectorAll(".each_question")
         for (let form of questionForms){
             const formData = new FormData(form)
             postQuestion(formData)
         }
+        let tempCode = document.createElement("h2")
+        tempCode.innerText = `Quiz Code: ${newUniqCode}`
+        finishcreate.append(tempCode)
+        finishcreate.innerHTML += `
+        <button type="button" id="back_home">Home</button>
+        `
     };
 
     // render the quiz
@@ -315,6 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const secondsLeft = Math.round((then - Date.now()) / 1000);
         if(secondsLeft < 0) {
             clearInterval(countdown);
+            scoring()
             return;
         }
         displayTimeLeft(secondsLeft);
