@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     `
                     <div class="slide">
                         <div class="question"> ${currentQuestion.statement} </div>
-                        <imgtag ${currentQuestion.image} width="100%">
+                        <img src=${currentQuestion.image} width="100%">
                         ${choices.join("")}
                     </div>`
                 )
@@ -422,8 +422,9 @@ document.addEventListener("DOMContentLoaded", () => {
         appendMessage(`${name} disconnected`)
         })
         function appendMessage(message) {
-            const messageElement = document.createElement("div")
-            messageElement.innerText = message
+            const messageElement = document.createElement("li")
+            let timenow = new Date().toLocaleTimeString("en-US")
+            messageElement.innerText = `${message}`
             messageContainer.append(messageElement)
         }
         messageForm.addEventListener("submit", e => {
