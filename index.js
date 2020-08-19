@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const questionForms = document.querySelectorAll(".each_question")
         for (let form of questionForms){
             const formData = new FormData(form)
-            postQuestion(formData)
+            postQuestion(formData).then(console.log)
         }
     };
 
@@ -191,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const submitButton = document.getElementById("submit");
         questionObj.forEach(
             (currentQuestion, questionNumber) => {
+                console.log(currentQuestion.image)
                 const choices = [];
                 const options = [currentQuestion.answer, currentQuestion.incorrect1, currentQuestion.incorrect2, currentQuestion.incorrect3] 
                 shuffle(options)
@@ -206,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     `
                     <div class="slide">
                         <div class="question"> ${currentQuestion.statement} </div>
-                        <imgtag ${currentQuestion.image} width="100%">
+                        <img src=${currentQuestion.image} width="100%">
                         ${choices.join("")}
                     </div>`
                 )
