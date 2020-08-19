@@ -103,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     function submitQuestions(){
-        console.log(finishcreate)
         const questionForms = document.querySelectorAll(".each_question")
         for (let form of questionForms){
             const formData = new FormData(form)
@@ -130,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const renderQuestion = (questionObj) => {
-        console.log(questionObj)
         // display timer
         timer(quizObj.time_limit * 60)
         switchHiddenDiv(quizContainer)
@@ -328,7 +326,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if(secondsLeft < 0) {
             clearInterval(countdown);
             scoring()
-            return;
+            switchHiddenDiv(quizResult)
+            switchHiddenDiv(quizContainer)
         }
         displayTimeLeft(secondsLeft);
         }, 1000);
