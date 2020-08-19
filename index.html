@@ -22,31 +22,31 @@
             <h2>Create Quiz</h2>
         <div id="quiz_form_container" class="seen_div">
             <form id="main_quiz">
-                <label for="teacher_name">Creator Name:</label>
+                <label for="teacher_name">Creator Name</label><br>
                 <input type="text" name="teacher_name" maxlength="20"><br>
-                <label for="email">Email Address:</label>
+                <label for="email">Email Address</label><br>
                 <input type="text" name="teacher_email" maxlength="40"><br>
-                <label for="quiz_title">Quiz title:</label>
+                <label for="quiz_title">Quiz title</label><br>
                 <input type="text" name="quiz_title" maxlength="40"><br>
-                <label for="timer">Time limit:</label>
-                <input type="number" name="timer" placeholder="Minutes">
+                <label for="timer">Time limit</label><br>
+                <input type="number" name="timer" placeholder="Minutes"><br>
                 <button type="submit">Next</button>
             </form> 
         </div>
         <div id="question_form_container" class="hidden_div">
             <form class="each_question" id="1">
                 <input type="hidden" name="quiz_id" id="orginalForm" value="">
-                <label for="statement">Question 1:</label>
+                <label for="statement">Question 1:</label><br>
                 <input type="text" name="statement"><br>
-                <label for="image">Upload image:</label>
+                <label for="image">Upload image:</label><br>
                 <input type="file" name="image"/><br>
-                <label for="answer">Answer:</label>
+                <label for="answer">Answer:</label><br>
                 <input type="text" name="answer"><br>
-                <label for="incorrect1">Incorrect answer 1:</label>
+                <label for="incorrect1">Incorrect answer 1:</label><br>
                 <input type="text" name="incorrect1"><br>
-                <label for="incorrect2">Incorrect answer 2:</label>
+                <label for="incorrect2">Incorrect answer 2:</label><br>
                 <input type="text" name="incorrect2"><br>
-                <label for="incorrect3">Incorrect answer 3:</label>
+                <label for="incorrect3">Incorrect answer 3:</label><br>
                 <input type="text" name="incorrect3"><br>
             </form>
             <button type="button" id="submit_questions">Submit</button>

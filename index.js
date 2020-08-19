@@ -35,17 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
             newForm.id = formCount.toString() 
             newForm.innerHTML = `
             <input type="hidden" name="quiz_id" value=${newQuizObj.id}>
-            <label for="statement">Question ${newForm.id}:</label>
+            <label for="statement">Question ${newForm.id}:</label><br>
             <input type="text" name="statement"><br>
-            <label for="image">Upload image:</label>
+            <label for="image">Upload image:</label><br>
             <input type="file" name="image"/><br>
-            <label for="answer">Answer:</label>
+            <label for="answer">Answer:</label><br>
             <input type="text" name="answer"><br>
-            <label for="incorrect1">Incorrect answer 1:</label>
+            <label for="incorrect1">Incorrect answer 1:</label><br>
             <input type="text" name="incorrect1"><br>
-            <label for="incorrect2">Incorrect answer 2:</label>
+            <label for="incorrect2">Incorrect answer 2:</label><br>
             <input type="text" name="incorrect2"><br>
-            <label for="incorrect3">Incorrect answer 3:</label>
+            <label for="incorrect3">Incorrect answer 3:</label><br>
             <input type="text" name="incorrect3"><br>
             `
             const submitButton = document.getElementById("submit_questions")
@@ -106,17 +106,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // render the quiz
     const confirmQuiz = (quiz) => {
         switchHiddenDiv(confirmQuizBox)
-        const quizTitle = document.createElement("h2")
+        const quizTitle = document.createElement("h3")
         const quizTeacher = document.createElement("p")
         
-        quizTitle.innerText = `${quiz.title}`
+        quizTitle.innerText = `Quiz: ${quiz.title}`
         quizTeacher.innerText = `Teacher Name: ${quiz.teacher_name}`
 
         confirmQuizBox.prepend(quizTitle, quizTeacher)
     }
 
     const renderQuestion = (questionObj) => {
-        console.log(questionObj)
         // display timer
         timer(quizObj.time_limit * 60)
         switchHiddenDiv(quizContainer)
