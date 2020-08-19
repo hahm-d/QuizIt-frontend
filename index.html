@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
     <script src="index.js"></script>  
+    <script src="https://smtpjs.com/v3/smtp.js"></script>  
 </head>
 <body>
 <div id="display" class="hidden_div">
@@ -68,6 +69,9 @@
             <h4 id="new_quiz_title"></h4>
             <h4 id="new_quiz_code"></h4>
             <p>(use this code to access your quiz)</p>
+            <form id="email_user" method="post">
+                <button type="submit">Send Email</button>
+            </form>
             <button onClick="window.location.reload();">Home</button>
         </div>
     </div>
@@ -106,12 +110,12 @@
         </table>
     </div>
     <div id="join_container" class="hidden_div">
-        <div id="chatroom_container"></div>
+        <h1>Welcome to the classroom!</h1><br>
+        <p>Share and discuss quizzes</p><br>
+        <ul id="chatroom_container"></ul>
         <form id="send_container">
-            <input type="text" id="message_input">
+            <input type="text" id="message_input" placeholder="Enter Message" autocomplete="off" autofocus>
             <button type="submit" id="send_button">Send</button><br>
-            <label>Welcome to the classroom!</label><br>
-            <label>Share and discuss quizzes</label><br>
         </form>
     </div>
 </div>
