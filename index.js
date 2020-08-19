@@ -9,7 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmQuizBox = document.getElementById("confirm_quiz")
     const quizContainer = document.getElementById("quiz_container")
     const questionContainer = document.getElementById("questions_container")
+    const newQuizInfo = document.getElementById("new_quiz_info")
     const messageContainer = document.getElementById("chatroom_container")
+    const timerDiv = document.getElementById("display")
     let formCount = 1
     let newQuizObj = {}
     let newUniqCode;
@@ -29,46 +31,29 @@ document.addEventListener("DOMContentLoaded", () => {
             //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(createquiz)
-        }else if(e.target.matches("#add_more")){
-            const newForm = document.createElement("form")
-            formCount++
-            newForm.classList = "each_question"
-            newForm.id = formCount.toString() 
-            newForm.innerHTML = `
-            <input type="hidden" name="quiz_id" value=${newQuizObj.id}>
-            <label for="statement">Question ${newForm.id}:</label><br>
-            <input type="text" name="statement"><br>
-            <label for="image">Upload image:</label><br>
-            <input type="file" name="image"/><br>
-            <label for="answer">Answer:</label><br>
-            <input type="text" name="answer"><br>
-            <label for="incorrect1">Incorrect answer 1:</label><br>
-            <input type="text" name="incorrect1"><br>
-            <label for="incorrect2">Incorrect answer 2:</label><br>
-            <input type="text" name="incorrect2"><br>
-            <label for="incorrect3">Incorrect answer 3:</label><br>
-            <input type="text" name="incorrect3"><br>
-            `
-            const submitButton = document.getElementById("submit_questions")
-            questionFormContainer.insertBefore(newForm, submitButton)
         }else if (e.target.matches("#btn_confirm_quiz")){
             switchHiddenDiv(confirmQuizBox)
+            switchHiddenDiv(timerDiv)
             getQuestions(quizObj.id).then(renderQuestion)
         }else if (e.target.matches("#btn_cancel_quiz")){
-            switchHiddenDiv(confirmQuizBox)
+            confirmQuizBox.className = "hidden_div"
+            createquiz.className = "hidden_div"
             switchHiddenDiv(main)
             confirmQuizBox.children[0].remove()
             confirmQuizBox.children[0].remove()
             confirmQuizBox.children[0].remove()
         }else if (e.target.matches("#submit_questions")){
             submitQuestions()
+            renderNewQuizInfo()
+            switchHiddenDiv(questionFormContainer)
+            switchHiddenDiv(newQuizInfo)
         }else if (e.target.matches("#submit")){
             scoring()
             switchHiddenDiv(quizResult)
             switchHiddenDiv(quizContainer)
         }
     }) 
-
+1
     //main form submit
     document.addEventListener("submit", e => {
         e.preventDefault()
@@ -82,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             switchHiddenDiv(quizFormContainer)
             switchHiddenDiv(questionFormContainer)
+            createQuestionsHandler();
         }else if(e.target.matches("#find_quiz")){
             const uniq_code = e.target.unique_code.value
             getQuiz(uniq_code)
@@ -115,6 +101,83 @@ document.addEventListener("DOMContentLoaded", () => {
         quizTeacher.innerText = `Teacher Name: ${quiz.teacher_name}`
 
         confirmQuizBox.prepend(quizTitle, quizTeacher)
+    }
+
+    const createQuestionsHandler = () => {
+        const parent = document.getElementById("forms")
+        let slides = parent.children
+        const addQuestionButton = document.getElementById("add_more")
+        const previousButton = document.getElementById("previous_question");
+        const nextButton = document.getElementById("next_question");
+        let currentSlide = 0;
+        function showSlide(n) {
+            slides[currentSlide].classList.remove("active-slide");
+            slides[n].classList.add("active-slide");
+            currentSlide = n;
+            if(currentSlide === 0){
+            previousButton.style.display = "none";
+            }
+            else{
+            previousButton.style.display = "inline-block";
+            }
+            if(currentSlide === slides.length-1){
+            nextButton.style.display = "none";
+            }
+            else{
+            nextButton.style.display = "inline-block";
+            }
+        }
+
+        showSlide(currentSlide);
+
+        function addQuestion() {
+            slides[currentSlide].classList.remove("active-slide");
+            previousButton.style.display = "inline-block";
+            nextButton.style.display = "none";
+
+            const newForm = document.createElement("form")
+            formCount++
+            newForm.classList = "each_question active-slide"
+            newForm.id = formCount.toString() 
+            newForm.innerHTML = `
+            <input type="hidden" name="quiz_id" value=${newQuizObj.id}>
+            <label for="statement">Question ${newForm.id}:</label><br>
+            <input type="text" name="statement"><br>
+            <label for="image">Upload image:</label><br>
+            <input type="file" name="image"/><br>
+            <label for="answer">Answer:</label><br>
+            <input type="text" name="answer"><br>
+            <label for="incorrect1">Incorrect answer 1:</label><br>
+            <input type="text" name="incorrect1"><br>
+            <label for="incorrect2">Incorrect answer 2:</label><br>
+            <input type="text" name="incorrect2"><br>
+            <label for="incorrect3">Incorrect answer 3:</label><br>
+            <input type="text" name="incorrect3"><br>
+            `
+            parent.append(newForm)
+            currentSlide = parseInt(newForm.id) - 1
+            console.log(slides)
+        }
+
+        function showNextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function showPreviousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        addQuestionButton.addEventListener("click", addQuestion);
+        previousButton.addEventListener("click", showPreviousSlide);
+        nextButton.addEventListener("click", showNextSlide);
+    }
+    
+    const renderNewQuizInfo = () => {
+        const newQuizTitle = document.getElementById("new_quiz_title")
+        const newQuizCode = document.getElementById("new_quiz_code")
+        newQuizTitle.innerText = `Title: ${newQuizObj.title}`
+        newQuizCode.innerText = `Code: ${newQuizObj.unique_code}`
+        console.log(newQuizObj)
     }
 
     const renderQuestion = (questionObj) => {
@@ -151,6 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
         )
             
         questions_container.innerHTML = output.join("");
+
         const slides = document.querySelectorAll(".slide")
         let currentSlide = 0;
 
@@ -322,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function displayTimeLeft(seconds) {
         const minutes = Math.floor(seconds / 60);
         const remainderSeconds = seconds % 60;
-        const display = `${minutes}:${remainderSeconds < 10 ? "0" : "" }${remainderSeconds}`;
+        const display = `Time Left: ${minutes}:${remainderSeconds < 10 ? "0" : "" }${remainderSeconds}`;
         timerDisplay.innerText = display;
     }
     function displayEndTime(timestamp) {
