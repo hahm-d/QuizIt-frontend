@@ -1,10 +1,11 @@
 # QuizCreator_frontend
 
 To install: 
-npm install socket.io --save
+npm i socket.io
+npm i --save-dev nodemon
 
 Run on terminal: 
-node server.js
+npm run devStart
 
-Open: 
-index.html
+quit nodemon: 
+control + c

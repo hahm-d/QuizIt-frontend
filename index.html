@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Maker</title>
+    <script defer src="http://localhost:3003/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
     <script src="index.js"></script>  
-    <script src="timer.js"></script> 
 </head>
 <body>
-<div class="conatiner">
+<div class="container">
     <div id="main" class="seen_div">
             <h2>Quiz Maker App</h2>
-            <p>Create your own Quiz! Share and dicuss</p>
+            <p>Create your own Quiz!</p>
+            <p>Share and discuss</p>
             <button id="create">Create Quiz</button>
             <button id="take">Take Quiz</button>
             <button id="join">Join a Classroom</button>
@@ -63,7 +64,8 @@
     </div>
     <div id="confirm_quiz" class="hidden_div">
         <p>Is this your quiz?</p><br>
-        <button id="btn_confirm_quiz">Yes</button>
+        <p>WARNING: Quiz will start on 'Confirm'</p><br>
+        <button id="btn_confirm_quiz">Confirm</button>
         <button id="btn_cancel_quiz">Cancel</button>
     </div>
     <div id="quiz_container" class="hidden_div">
@@ -78,7 +80,17 @@
         <button id="submit">Submit Quiz</button>
     </div>
     <div id="quiz_result_container" class="hidden_div">
-        
+        <h1>Results</h1>
+        <h3 id="score_value" placeholder="Score here"></h3>
+        <h1 id="score_percentage" placeholder="Percentage"></h1>
+        <table id="ResultTable">
+        <tr>
+            <th>#</th>
+            <th>Question</th>
+            <th>Your Answer</th>
+            <th>Solution</th>
+        </tr>
+        </table>
     </div>
     <div id="join_container" class="hidden_div">
         <div id="chatroom_container"></div>

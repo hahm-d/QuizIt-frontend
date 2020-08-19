@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^4.5.2",
     "activestorage": "^5.2.4-3",
+    "bootstrap": "^4.5.2",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {

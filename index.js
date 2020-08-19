@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmQuizBox = document.getElementById("confirm_quiz")
     const quizContainer = document.getElementById("quiz_container")
     const questionContainer = document.getElementById("questions_container")
+    const messageContainer = document.getElementById("chatroom_container")
     let formCount = 1
     let newQuizObj = {}
     let newUniqCode;
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
             //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(chatroom)
-            //server start here after fix
+            server()
         }else if(e.target.matches("#take")){
             //hide main div
             switchHiddenDiv(main)
@@ -58,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(main)
             confirmQuizBox.children[0].remove()
             confirmQuizBox.children[0].remove()
+            confirmQuizBox.children[0].remove()
         }else if (e.target.matches("#submit_questions")){
             submitQuestions()
         }else if (e.target.matches("#submit")){
@@ -80,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             switchHiddenDiv(quizFormContainer)
             switchHiddenDiv(questionFormContainer)
-        } else if(e.target.matches("#find_quiz")){
+        }else if(e.target.matches("#find_quiz")){
             const uniq_code = e.target.unique_code.value
             getQuiz(uniq_code)
             .then(quiz => {
@@ -123,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const output = []
         const previousButton = document.getElementById("previous");
         const nextButton = document.getElementById("next");
-        const submitButton = document.getElementById('submit');
+        const submitButton = document.getElementById("submit");
         questionObj.forEach(
             (currentQuestion, questionNumber) => {
                 const choices = [];
@@ -142,33 +144,33 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="slide">
                         <div class="question"> ${currentQuestion.statement} </div>
                         <imgtag ${currentQuestion.image} width="100%">
-                        ${choices.join('')}
+                        ${choices.join("")}
                     </div>`
                 )
             }
         )
             
-        questions_container.innerHTML = output.join('');
+        questions_container.innerHTML = output.join("");
         const slides = document.querySelectorAll(".slide")
         let currentSlide = 0;
 
         function showSlide(n) {
-            slides[currentSlide].classList.remove('active-slide');
-            slides[n].classList.add('active-slide');
+            slides[currentSlide].classList.remove("active-slide");
+            slides[n].classList.add("active-slide");
             currentSlide = n;
             if(currentSlide === 0){
-            previousButton.style.display = 'none';
+            previousButton.style.display = "none";
             }
             else{
-            previousButton.style.display = 'inline-block';
+            previousButton.style.display = "inline-block";
             }
             if(currentSlide === slides.length-1){
-            nextButton.style.display = 'none';
-            submitButton.style.display = 'inline-block';
+            nextButton.style.display = "none";
+            submitButton.style.display = "inline-block";
             }
             else{
-            nextButton.style.display = 'inline-block';
-            submitButton.style.display = 'none';
+            nextButton.style.display = "inline-block";
+            submitButton.style.display = "none";
             }
         }
 
@@ -202,27 +204,34 @@ document.addEventListener("DOMContentLoaded", () => {
         return initials.join("") + Math.floor((Math.random() * 100) * 222)
     }
 
+
     function scoring(){
         let correctAnswers = quizObj.questions.map(question => question.answer) 
+
         let numCorrect = 0;
-        
+        const findTable = document.getElementById("ResultTable")
+        //quizResult
         quizObj.questions.forEach((currentQuestion, questionNumber) => {
             const answerCon = correctAnswers[questionNumber];
             const selector = `input[name=question${questionNumber}]:checked`
             const userAns = (document.querySelector(selector) || {}).value
-
+            let row = findTable.insertRow(questionNumber + 1)
+            row.insertCell(0).innerHTML = questionNumber + 1
+            row.insertCell(1).innerHTML = currentQuestion.statement
+            row.insertCell(2).innerHTML = userAns
+            row.insertCell(3).innerHTML = answerCon
             if(userAns === answerCon){
                 numCorrect++
-                // color the answers green
-                //answerContainers[questionNumber].style.color = 'lightgreen';
-            }else{
-                // color the answers red
-                //answerContainers[questionNumber].style.color = 'red';
             }
-            
+
         })
-        return `Score: ${numCorrect}/${correctAnswers.length}`   
-        //maybe return the entire slider div with .red / .green style colors with score on next page
+        //percentage calcuator
+        const percentage = (numCorrect / correctAnswers.length) * 100
+        let resultValue = document.createElement("div")
+        resultValue.innerHTML = `
+        <h3 id="user_score_value">Score: ${numCorrect}/${correctAnswers.length}</h3>
+        <h1 id="user_percent_value">${percentage}%</h1>`
+        quizResult.append(resultValue)
     }
 
     const shuffle = (array) => {
@@ -279,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         return fetch(QUIZ_URL, setting)
         .then(resp => resp.json())
-        // comment out so I don't send post to create quiz 
+        // comment out so I don"t send post to create quiz 
     };
 
     const postQuestion = formData => {
@@ -293,8 +302,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     //timer
     let countdown;
-    const timerDisplay = document.querySelector('.display_time');
-    const endTime = document.querySelector('.display_end');
+    const timerDisplay = document.querySelector(".display_time");
+    const endTime = document.querySelector(".display_end");
     function timer(seconds) {
         clearInterval(countdown);
         const now = Date.now();
@@ -313,8 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function displayTimeLeft(seconds) {
         const minutes = Math.floor(seconds / 60);
         const remainderSeconds = seconds % 60;
-        const display = `${minutes}:${remainderSeconds < 10 ? '0' : '' }${remainderSeconds}`;
-        document.title = display;
+        const display = `${minutes}:${remainderSeconds < 10 ? "0" : "" }${remainderSeconds}`;
         timerDisplay.innerText = display;
     }
     function displayEndTime(timestamp) {
@@ -322,8 +330,44 @@ document.addEventListener("DOMContentLoaded", () => {
         const hour = end.getHours();
         const adjustedHour = hour > 12 ? hour - 12 : hour;
         const minutes = end.getMinutes();
-        endTime.textContent = `Quiz Ends at ${adjustedHour}:${minutes < 10 ? '0' : ''}${minutes}`;
+        endTime.textContent = `Quiz Ends at ${adjustedHour}:${minutes < 10 ? "0" : ""}${minutes}`;
     }
+
+    function server(){
+        const messageForm = document.getElementById("send_container")
+        const messageInput = document.getElementById("message_input")
+        const socket = io("http://localhost:3003")
+        const usermessage = messageInput.value
+        socket.emit("send-chat-message", usermessage)
+        messageInput.value = ""
+        const name = prompt("What is your name?")
+        appendMessage("You joined")
+        socket.emit("new-user", name)
+        socket.on("chat-message", data => {
+        appendMessage(`${data.name}: ${data.message}`)
+        })
+    
+        socket.on("user-connected", name => {
+        appendMessage(`${name} connected`)
+        })
+    
+        socket.on("user-disconnected", name => {
+        appendMessage(`${name} disconnected`)
+        })
+        function appendMessage(message) {
+            const messageElement = document.createElement("div")
+            messageElement.innerText = message
+            messageContainer.append(messageElement)
+        }
+        messageForm.addEventListener("submit", e => {
+            e.preventDefault()
+                const message = messageInput.value
+                appendMessage(`You: ${message}`)
+                socket.emit("send-chat-message", message)
+                messageInput.value = ""
+        })
+    }
+
 });
 
 
