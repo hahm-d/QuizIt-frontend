@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerDiv = document.getElementById("display")
     let formCount = 1
     let newQuizObj = {}
-    let newUniqCode;
+    let newUniqCode; //refactor this, not using this variable
 
     //main on-click listener
     document.addEventListener("click", e => {
@@ -80,6 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert("This quiz does not exist")
                 }
             })
+        }else if(e.target.matches("#email_user")){
+            sendEmail()
         }
     })
 
@@ -156,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `
             parent.append(newForm)
             currentSlide = parseInt(newForm.id) - 1
-            console.log(slides)
+            //console.log(slides)
         }
 
         function showNextSlide() {
@@ -177,7 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const newQuizCode = document.getElementById("new_quiz_code")
         newQuizTitle.innerText = `Title: ${newQuizObj.title}`
         newQuizCode.innerText = `Code: ${newQuizObj.unique_code}`
-        console.log(newQuizObj)
     }
 
     const renderQuestion = (questionObj) => {
@@ -289,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         })
-        //percentage calcuator
+        //percentage calculate
         const percentage = (numCorrect / correctAnswers.length) * 100
         let resultValue = document.createElement("div")
         resultValue.innerHTML = `
@@ -333,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const postQuiz = (quiz_obj) => {
         const rando = randomizer(quiz_obj.teacher_name.value)
-        newUniqCode = rando
+        newUniqCode = rando //refactor this, not using this variable
         let setting = {
             method: "POST",
             headers: {
@@ -434,7 +435,22 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
+    function sendEmail() {
+        console.log(newQuizObj.teacher_email)
+        Email.send({
+        Host: "smtp.gmail.com",
+        Username : "quizit2020@gmail.com",
+        Password : "quizit123!",
+        To : `${newQuizObj.teacher_email}`,
+        From : "quizit2020@gmail.com",
+        Subject : "Your Quizit Quiz Code",
+        Body : `Thank you for using Quizit! \n 
+                Here is your code! \n
+        quiz code: ${newQuizObj.unique_code}`,
+        }).then(
+            message => alert("mail sent successfully")
+        );
+    }
+
+
 });
-
-
-
