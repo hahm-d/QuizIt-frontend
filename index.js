@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerDiv = document.getElementById("display")
     let formCount = 1
     let newQuizObj = {}
-    let newUniqCode; //refactor this, not using this variable
+    let newUniqCode;
 
     //main on-click listener
     document.addEventListener("click", e => {
@@ -80,8 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert("This quiz does not exist")
                 }
             })
-        }else if(e.target.matches("#email_user")){
-            sendEmail()
         }
     })
 
@@ -89,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const questionForms = document.querySelectorAll(".each_question")
         for (let form of questionForms){
             const formData = new FormData(form)
-            postQuestion(formData).then(console.log)
+            postQuestion(formData)
         }
     };
 
@@ -158,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `
             parent.append(newForm)
             currentSlide = parseInt(newForm.id) - 1
-            //console.log(slides)
+            console.log(slides)
         }
 
         function showNextSlide() {
@@ -179,6 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const newQuizCode = document.getElementById("new_quiz_code")
         newQuizTitle.innerText = `Title: ${newQuizObj.title}`
         newQuizCode.innerText = `Code: ${newQuizObj.unique_code}`
+        console.log(newQuizObj)
     }
 
     const renderQuestion = (questionObj) => {
@@ -207,9 +206,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 output.push(
                     `
                     <div class="slide">
-                        <div class="question"> ${currentQuestion.statement} </div>
-                        <img src=${currentQuestion.image} width="100%">
-                        ${choices.join("")}
+                        <div id="image_container">
+                            <img src=${currentQuestion.image} width="400px">
+                        </div>
+                        <div id="singel_question_container">
+                            <div class="question"> ${currentQuestion.statement} </div>
+                            ${choices.join("")}
+                        </div>
                     </div>`
                 )
             }
@@ -291,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         })
-        //percentage calculate
+        //percentage calcuator
         const percentage = (numCorrect / correctAnswers.length) * 100
         let resultValue = document.createElement("div")
         resultValue.innerHTML = `
@@ -335,7 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const postQuiz = (quiz_obj) => {
         const rando = randomizer(quiz_obj.teacher_name.value)
-        newUniqCode = rando //refactor this, not using this variable
+        newUniqCode = rando
         let setting = {
             method: "POST",
             headers: {
@@ -423,9 +426,8 @@ document.addEventListener("DOMContentLoaded", () => {
         appendMessage(`${name} disconnected`)
         })
         function appendMessage(message) {
-            const messageElement = document.createElement("li")
-            let timenow = new Date().toLocaleTimeString("en-US")
-            messageElement.innerText = `${message}`
+            const messageElement = document.createElement("div")
+            messageElement.innerText = message
             messageContainer.append(messageElement)
         }
         messageForm.addEventListener("submit", e => {
@@ -437,22 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    function sendEmail() {
-        console.log(newQuizObj.teacher_email)
-        Email.send({
-        Host: "smtp.gmail.com",
-        Username : "quizit2020@gmail.com",
-        Password : "quizit123!",
-        To : `${newQuizObj.teacher_email}`,
-        From : "quizit2020@gmail.com",
-        Subject : "Your Quizit Quiz Code",
-        Body : `Thank you for using Quizit! \n 
-                Here is your code! \n
-        quiz code: ${newQuizObj.unique_code}`,
-        }).then(
-            message => alert("mail sent successfully")
-        );
-    }
-
-
 });
+
+
+

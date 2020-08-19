@@ -1,5 +1,5 @@
 body{
-    align-items: center;
+
 }
 
 button {
@@ -23,6 +23,10 @@ button:hover{
 }
 .seen_div {
     display: block;
+}
+
+.longlogo{
+    width: 100px;
 }
 
 #main{
@@ -137,4 +141,8 @@ button:hover{
 
 .active-slide{
     display: block;
+}
+
+#image_container{
+    margin-bottom: 20px;
 }
