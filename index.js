@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     switchHiddenDiv(takequiz)
                     confirmQuiz(quiz)
                 } else {
-                    alert("This quiz does not exist")
+                    modalPopUp("This quiz does not exist");
                 }
             })
         }else if(e.target.matches("#email_user")){
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }else if(e.target.matches("#quiz_taker_form")){
             testTakerName = document.getElementById("student_name").value
             if(testTakerName == null || testTakerName == ""){
-                alert("Invalid name")
+                modalPopUp("Please input a name.");
             }else{
                 switchHiddenDiv(quizTakerInfoBox)
                 switchHiddenDiv(timerDiv)
@@ -146,8 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <input type="hidden" name="quiz_id" value=${newQuizObj.id}>
             <label for="statement">Question ${newForm.id}:</label><br>
             <input type="text" name="statement"><br>
-            <label for="image">Upload image:</label><br>
-            <input type="file" name="image"/><br>
             <label for="answer">Answer:</label><br>
             <input type="text" name="answer"><br>
             <label for="incorrect1">Incorrect answer 1:</label><br>
@@ -156,6 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <input type="text" name="incorrect2"><br>
             <label for="incorrect3">Incorrect answer 3:</label><br>
             <input type="text" name="incorrect3"><br>
+            <label for="image">Upload image:</label><br>
+            <input type="file" name="image"/><br>
             `
             parent.append(newForm)
             currentSlide = parseInt(newForm.id) - 1
@@ -325,6 +325,21 @@ document.addEventListener("DOMContentLoaded", () => {
     
     };
 
+    const modalPopUp = (string) => {
+        let modal = document.getElementById("myModal");
+        let span = document.getElementsByClassName("close_modal")[0];
+        let alertSentence = document.getElementsByClassName("alert_message")[0];
+        modal.style.display = "block";
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+        }
+        alertSentence.innerHTML = string
+    }
 
     //fetch request
     const QUIZ_URL = "http://localhost:3000/quizzes/"
@@ -384,7 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
         countdown = setInterval(() => {
         const secondsLeft = Math.round((then - Date.now()) / 1000);
         if(secondsLeft < 0) {
-            alert("Times up!")
+            modalPopUp("Times up!")
             clearInterval(countdown);
             if(emailFlag == false){
                 scoring()
@@ -463,7 +478,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 Here is your code! \n
             quiz code: ${newQuizObj.unique_code}`,
         }).then(
-            message => alert("mail sent successfully")
+            message => modalPopUp("mail sent successfully")
         );
     }
     function sendResult(score) {
@@ -476,7 +491,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Subject : `${quizObj.title}, Student: ${testTakerName}'s results `,
             Body : `${testTakerName} scored: ${score}% on quiz: ${quizObj.unique_code}`,
         }).then(
-            message => alert("Results Submitted")
+            message => modalPopUp("Results Submitted")
         );
     }
 });

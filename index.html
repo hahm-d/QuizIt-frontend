@@ -12,12 +12,12 @@
     <script src="https://smtpjs.com/v3/smtp.js"></script>  
 </head>
 <body>
-<img class="longlogo" onClick="window.location.reload();" src="image/longlogo.png">
-<div id="display" class="hidden_div">
-    <p class="display_time"></p>
-    <p class="display_end"></p>
-</div>
-<div class="container">
+<div class="page_container">
+    <img class="longlogo" onClick="window.location.reload();" src="image/longlogo.png">
+    <div id="display" class="hidden_div">
+        <p class="display_time"></p>
+        <p class="display_end"></p>
+    </div>
     <div id="main" class="seen_div">
             <h2>Quiz Maker App</h2>
             <div id=flip>
@@ -52,8 +52,6 @@
                     <input type="hidden" name="quiz_id" id="orginalForm" value="">
                     <label for="statement">Question 1:</label><br>
                     <input type="text" name="statement"><br>
-                    <label for="image">Upload image:</label><br>
-                    <input type="file" name="image"/><br>
                     <label for="answer">Answer:</label><br>
                     <input type="text" name="answer"><br>
                     <label for="incorrect1">Incorrect answer 1:</label><br>
@@ -62,6 +60,8 @@
                     <input type="text" name="incorrect2"><br>
                     <label for="incorrect3">Incorrect answer 3:</label><br>
                     <input type="text" name="incorrect3"><br>
+                    <label for="image">Upload image:</label><br>
+                    <input type="file" name="image"/><br>
                 </form>
             </div>
             <button id="previous_question">Previous</button>
@@ -102,7 +102,6 @@
             <button onClick="window.location.reload();">Cancel</button>
         </form>
     </div>    
-    </div>
     <div id="quiz_container" class="hidden_div">
         <div id="questions_container" class="hidden_div">
         </div>
@@ -132,6 +131,12 @@
             <button type="submit" id="send_button">Send</button><br>
         </form>
         <button onClick="window.location.reload();">Home</button>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal_content">
+          <span class="close_modal">&times;</span>
+          <p class="alert_message"></p>
+        </div>  
     </div>
 </div>
 </body>
