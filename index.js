@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerDiv = document.getElementById("display")
     let formCount = 1
     let newQuizObj = {}
+    let quizObj = {}
     let newUniqCode;
 
     //main on-click listener
