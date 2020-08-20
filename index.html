@@ -12,7 +12,7 @@
     <script src="https://smtpjs.com/v3/smtp.js"></script>  
 </head>
 <body>
-<img class="longlogo" src="image/longlogo.png">
+<img class="longlogo" onClick="window.location.reload();" src="image/longlogo.png">
 <div id="display" class="hidden_div">
     <p class="display_time"></p>
     <p class="display_end"></p>
@@ -87,9 +87,17 @@
     </div>
     <div id="confirm_quiz" class="hidden_div">
         <p>Is this your quiz?</p><br>
-        <p>WARNING: Quiz will start on 'Confirm'</p><br>
         <button id="btn_confirm_quiz">Confirm</button>
         <button id="btn_cancel_quiz">Cancel</button>
+    </div>
+    <div id="quiz_taker-info" class="hidden_div">
+        <form id="quiz_taker-form">
+            <label for="statement">Your Name:</label><br>
+            <input type="text" name="quiz_taker_name"><br>
+            <button id="start_quiz">Start Quiz</button>
+            <button id="btn_cancel_quiz">Cancel</button>
+        </form>
+    </div>    
     </div>
     <div id="quiz_container" class="hidden_div">
         <div id="questions_container" class="hidden_div">

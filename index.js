@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizFormContainer = document.getElementById("quiz_form_container")
     const questionFormContainer = document.getElementById("question_form_container")
     const confirmQuizBox = document.getElementById("confirm_quiz")
+    const quizTakerInfoBox = document.getElementById("quiz_taker-info")
     const quizContainer = document.getElementById("quiz_container")
     const questionContainer = document.getElementById("questions_container")
     const newQuizInfo = document.getElementById("new_quiz_info")
@@ -33,8 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(createquiz)
         }else if (e.target.matches("#btn_confirm_quiz")){
             switchHiddenDiv(confirmQuizBox)
+            switchHiddenDiv(quizTakerInfoBox)
+        }else if (e.target.matches("#start_quiz")){
+            switchHiddenDiv(quizTakerInfoBox)
             switchHiddenDiv(timerDiv)
-            getQuestions(quizObj.id).then(renderQuestion)
+            getQuestions(quizObj.id).then(renderQuestion)        
         }else if (e.target.matches("#btn_cancel_quiz")){
             confirmQuizBox.className = "hidden_div"
             createquiz.className = "hidden_div"
