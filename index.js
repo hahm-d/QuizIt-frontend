@@ -39,13 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(quizTakerInfoBox)
             switchHiddenDiv(timerDiv)
             getQuestions(quizObj.id).then(renderQuestion)        
-        }else if (e.target.matches("#btn_cancel_quiz")){
-            confirmQuizBox.className = "hidden_div"
-            createquiz.className = "hidden_div"
-            switchHiddenDiv(main)
-            confirmQuizBox.children[0].remove()
-            confirmQuizBox.children[0].remove()
-            confirmQuizBox.children[0].remove()
         }else if (e.target.matches("#submit_questions")){
             submitQuestions()
             renderNewQuizInfo()
