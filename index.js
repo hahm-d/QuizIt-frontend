@@ -296,14 +296,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         })
-        //percentage calcuator
         const percentage = (numCorrect / correctAnswers.length) * 100
         let resultValue = document.createElement("div")
         resultValue.innerHTML = `
         <h3 id="user_score_value">Score: ${numCorrect}/${correctAnswers.length}</h3>
         <h1 id="user_percent_value">${percentage}%</h1>`
         quizResult.append(resultValue)
-
         //email results
         sendResult(percentage)
         emailFlag = true
@@ -362,7 +360,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         return fetch(QUIZ_URL, setting)
         .then(resp => resp.json())
-        // comment out so I don"t send post to create quiz 
     };
 
     const postQuestion = formData => {
@@ -393,7 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 scoring()
                 switchHiddenDiv(quizResult)
                 switchHiddenDiv(quizContainer)
-                switchHiddenDiv(timerDiv) //display timer
+                switchHiddenDiv(timerDiv)
             }
         }
         displayTimeLeft(secondsLeft);
