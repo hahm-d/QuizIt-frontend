@@ -80,7 +80,7 @@ label {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    width: 60%;
+    width: 70%;
 }
 
 #chatroom_container{
@@ -95,6 +95,13 @@ label {
 #chat_header{
     font-size: 50px;
     animation: reveal 3000ms ease-in-out forwards 200ms
+}
+
+#funtimes{
+    background: rgb(97, 189, 250);
+    padding-right: 20px;
+    border-radius: 15px;
+    letter-spacing: 2px;
 }
 
 .even_message{
