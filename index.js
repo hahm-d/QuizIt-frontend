@@ -414,9 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const messageForm = document.getElementById("send_container")
         const messageInput = document.getElementById("message_input")
         const socket = io("http://localhost:3003")
-        const usermessage = messageInput.value
-        socket.emit("send-chat-message", usermessage)
-        //messageInput.value = ""
+
         const name = prompt("What is your name?")
         socket.emit("new-user", name)
 
@@ -442,6 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
             messageElement.className = userObj.class
             messageElement.innerText = `${userObj.name}: ${userObj.message}`
             messageContainer.append(messageElement)
+            messageElement.scrollTop = messageElement.scrollHeight - messageElement.clientHeight;
         }
         messageForm.addEventListener("submit", e => {
             e.preventDefault()
