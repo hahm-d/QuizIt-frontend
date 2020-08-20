@@ -410,30 +410,37 @@ document.addEventListener("DOMContentLoaded", () => {
         const socket = io("http://localhost:3003")
         const usermessage = messageInput.value
         socket.emit("send-chat-message", usermessage)
-        messageInput.value = ""
+        //messageInput.value = ""
         const name = prompt("What is your name?")
-        appendMessage("You joined")
         socket.emit("new-user", name)
+
         socket.on("chat-message", data => {
-        appendMessage(`${data.name}: ${data.message}`)
+            appendUserMessage(data)
         })
     
         socket.on("user-connected", name => {
-        appendMessage(`${name} connected`)
+            appendMessage(`${name} connected`)
         })
     
         socket.on("user-disconnected", name => {
-        appendMessage(`${name} disconnected`)
+            appendMessage(`${name} disconnected`)
         })
         function appendMessage(message) {
-            const messageElement = document.createElement("div")
+            const messageElement = document.createElement("li")
+            messageElement.className = "alert_chat"
             messageElement.innerText = message
+            messageContainer.append(messageElement)
+        }
+        function appendUserMessage(userObj) {
+            const messageElement = document.createElement("li")
+            messageElement.className = userObj.class
+            messageElement.innerText = `${userObj.name}: ${userObj.message}`
             messageContainer.append(messageElement)
         }
         messageForm.addEventListener("submit", e => {
             e.preventDefault()
                 const message = messageInput.value
-                appendMessage(`You: ${message}`)
+                appendUserMessage({message: message, name: name, class: "even_message"})
                 socket.emit("send-chat-message", message)
                 messageInput.value = ""
         })

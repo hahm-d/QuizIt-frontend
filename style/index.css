@@ -97,8 +97,8 @@ button:hover{
 }
 
 #chatroom_container{
-    background-color: rgb(130, 190, 242);
-    border: 2px black;
+    background-color: rgb(186, 218, 245);
+    border: 10px black;
     margin: 24px auto 0 auto;
 	padding: 0 20px 0 0;
     width: 400px;
@@ -107,16 +107,21 @@ button:hover{
     overflow-x: hidden;
 }
 
-#chatroom_container li {
-	position: relative;
-	clear: both;
-	display: inline-block;
-	padding: 16px 40px 16px 20px;
-	margin: 0 0 20px 0;
-	font: 16px/20px 'Noto Sans', sans-serif;
-	border-radius: 10px;
+#chatroom_container .even_message{
+    list-style-type: none;
+    color: white;
 }
 
+#chatroom_container .odd_message{
+    list-style-type: none;
+    color: rgb(16, 210, 168);
+}
+
+#chatroom_container .alert_chat{
+    list-style-type: none;
+    background-color: black;
+    color: rgb(134, 240, 252);
+}
 
 #display{
     text-align: center;
