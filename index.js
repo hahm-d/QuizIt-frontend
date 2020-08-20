@@ -77,6 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert("This quiz does not exist")
                 }
             })
+        }else if(e.target.matches("#email_user")){
+            sendEmail()
         }
     })
 
@@ -443,6 +445,21 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
+    function sendEmail() {
+        Email.send({
+            Host: "smtp.gmail.com",
+            Username : "quizit2020@gmail.com",
+            Password : "quizit123!",
+            To : `${newQuizObj.teacher_email}`,
+            From : "quizit2020@gmail.com",
+            Subject : "Your Quizit Quiz Code",
+            Body : `Thank you for using Quizit! \n 
+                Here is your code! \n
+            quiz code: ${newQuizObj.unique_code}`,
+        }).then(
+            message => alert("mail sent successfully")
+        );
+    }
 });
 
 
