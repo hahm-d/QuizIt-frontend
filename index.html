@@ -42,7 +42,7 @@
                 <label for="timer">Time limit</label><br>
                 <input type="number" name="timer" placeholder="Minutes"><br>
                 <button type="submit">Next</button>
-                <button id="btn_cancel_quiz">Cancel</button>
+                <button onClick="window.location.reload();">Cancel</button>
             </form> 
         </div>
         <div id="question_form_container" class="hidden_div">
@@ -91,14 +91,14 @@
     <div id="confirm_quiz" class="hidden_div">
         <p>Is this your quiz?</p><br>
         <button id="btn_confirm_quiz">Confirm</button>
-        <button id="btn_cancel_quiz" onClick="window.location.reload();">Cancel</button>
+        <button onClick="window.location.reload();">Cancel</button>
     </div>
     <div id="quiz_taker-info" class="hidden_div">
         <form id="quiz_taker-form">
             <label for="statement">Your Name:</label><br>
             <input type="text" name="quiz_taker_name"><br>
             <button id="start_quiz">Start Quiz</button>
-            <button id="btn_cancel_quiz2" onClick="window.location.reload();">Cancel</button>
+            <button onClick="window.location.reload();">Cancel</button>
         </form>
     </div>    
     </div>
