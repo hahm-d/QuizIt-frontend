@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizFormContainer = document.getElementById("quiz_form_container")
     const questionFormContainer = document.getElementById("question_form_container")
     const confirmQuizBox = document.getElementById("confirm_quiz")
-    const quizTakerInfoBox = document.getElementById("quiz_taker-info")
+    const quizTakerInfoBox = document.getElementById("quiz_taker_info")
     const quizContainer = document.getElementById("quiz_container")
     const questionContainer = document.getElementById("questions_container")
     const newQuizInfo = document.getElementById("new_quiz_info")
@@ -15,30 +15,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerDiv = document.getElementById("display")
     let formCount = 1
     let newQuizObj = {}
-    let newUniqCode;
+    let quizObj = {}
+    let testTakerName = "";
 
     //main on-click listener
     document.addEventListener("click", e => {
         if(e.target.matches("#join")){
-            //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(chatroom)
             server()
         }else if(e.target.matches("#take")){
-            //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(takequiz)
         }else if(e.target.matches("#create")){
-            //hide main div
             switchHiddenDiv(main)
             switchHiddenDiv(createquiz)
         }else if (e.target.matches("#btn_confirm_quiz")){
             switchHiddenDiv(confirmQuizBox)
             switchHiddenDiv(quizTakerInfoBox)
-        }else if (e.target.matches("#start_quiz")){
-            switchHiddenDiv(quizTakerInfoBox)
-            switchHiddenDiv(timerDiv)
-            getQuestions(quizObj.id).then(renderQuestion)        
         }else if (e.target.matches("#submit_questions")){
             submitQuestions()
             renderNewQuizInfo()
@@ -79,6 +73,15 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         }else if(e.target.matches("#email_user")){
             sendEmail()
+        }else if(e.target.matches("#quiz_taker_form")){
+            testTakerName = document.getElementById("student_name").value
+            if(testTakerName == null || testTakerName == ""){
+                alert("Invalid name")
+            }else{
+                switchHiddenDiv(quizTakerInfoBox)
+                switchHiddenDiv(timerDiv)
+                getQuestions(quizObj.id).then(renderQuestion) 
+            }
         }
     })
 
@@ -176,7 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const newQuizCode = document.getElementById("new_quiz_code")
         newQuizTitle.innerText = `Title: ${newQuizObj.title}`
         newQuizCode.innerText = `Code: ${newQuizObj.unique_code}`
-        console.log(newQuizObj)
     }
 
     const renderQuestion = (questionObj) => {
@@ -300,6 +302,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3 id="user_score_value">Score: ${numCorrect}/${correctAnswers.length}</h3>
         <h1 id="user_percent_value">${percentage}%</h1>`
         quizResult.append(resultValue)
+
+        //email results
+        sendResult(percentage)
     }
 
     const shuffle = (array) => {
@@ -337,7 +342,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const postQuiz = (quiz_obj) => {
         const rando = randomizer(quiz_obj.teacher_name.value)
-        newUniqCode = rando
         let setting = {
             method: "POST",
             headers: {
@@ -458,6 +462,19 @@ document.addEventListener("DOMContentLoaded", () => {
             quiz code: ${newQuizObj.unique_code}`,
         }).then(
             message => alert("mail sent successfully")
+        );
+    }
+    function sendResult(score) {
+        Email.send({
+            Host: "smtp.gmail.com",
+            Username : "quizit2020@gmail.com",
+            Password : "quizit123!",
+            To : `${quizObj.teacher_email}`,
+            From : "quizit2020@gmail.com",
+            Subject : `${quizObj.title}, Student: ${testTakerName}'s results `,
+            Body : `${testTakerName} scored: ${score}% on quiz: ${quizObj.unique_code}`,
+        }).then(
+            message => alert("Results Submitted")
         );
     }
 });

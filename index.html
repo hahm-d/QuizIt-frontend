@@ -86,6 +86,7 @@
             <label for="quiz_unique_code">Quiz Code:</label>
             <input type="text" name="unique_code">
             <button type="submit">Submit</button>
+            <button onClick="window.location.reload();">Cancel</button>
         </form>
     </div>
     <div id="confirm_quiz" class="hidden_div">
@@ -93,10 +94,10 @@
         <button id="btn_confirm_quiz">Confirm</button>
         <button onClick="window.location.reload();">Cancel</button>
     </div>
-    <div id="quiz_taker-info" class="hidden_div">
-        <form id="quiz_taker-form">
+    <div id="quiz_taker_info" class="hidden_div">
+        <form id="quiz_taker_form">
             <label for="statement">Your Name:</label><br>
-            <input type="text" name="quiz_taker_name"><br>
+            <input type="text" id="student_name" name="quiz_taker_name"><br>
             <button id="start_quiz">Start Quiz</button>
             <button onClick="window.location.reload();">Cancel</button>
         </form>
@@ -130,6 +131,7 @@
             <input type="text" id="message_input" placeholder="Enter Message" autocomplete="off" autofocus>
             <button type="submit" id="send_button">Send</button><br>
         </form>
+        <button onClick="window.location.reload();">Home</button>
     </div>
 </div>
 </body>

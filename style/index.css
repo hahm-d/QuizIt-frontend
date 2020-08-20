@@ -48,7 +48,7 @@ button:hover{
 #create_container,
 #take_container,
 #confirm_quiz,
-#quiz_taker-info,
+#quiz_taker_info,
 #join_container {
     text-align: center;
     position: absolute;
