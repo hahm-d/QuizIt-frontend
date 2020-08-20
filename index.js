@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(newQuizInfo)
         }else if (e.target.matches("#submit")){
             scoring()
+            switchHiddenDiv(timerDiv)
             switchHiddenDiv(quizResult)
             switchHiddenDiv(quizContainer)
         }
@@ -280,7 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let correctAnswers = quizObj.questions.map(question => question.answer) 
 
         let numCorrect = 0;
-        const findTable = document.getElementById("ResultTable")
+        const findTable = document.getElementById("resultTable")
         //quizResult
         quizObj.questions.forEach((currentQuestion, questionNumber) => {
             const answerCon = correctAnswers[questionNumber];

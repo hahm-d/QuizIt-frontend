@@ -83,6 +83,41 @@ label {
     width: 70%;
 }
 
+#resultTable{
+    margin-left: auto;
+    margin-right: auto;
+    border:1px solid #EEEEEE;
+    width: 70%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+th{
+    background:rgb(72, 70, 70);
+    color: rgb(247, 249, 250);
+}
+td{
+    background:rgb(167, 173, 177);
+    color: rgb(247, 249, 250);
+}
+#score_header{
+    font-size: 60px;
+    color: #DC143C;
+    letter-spacing: 2px;
+}
+
+#user_percent_value{
+    font-size: 60px;
+    color: #42c58a;
+    animation: reveal 3000ms ease-in-out forwards 200ms;
+}
+
+#user_score_value{
+    font-size: 50px;
+    color: #4ec7f3;
+    animation: reveal 3000ms ease-in-out forwards 200ms;
+}
+
 #chatroom_container{
     border: 10px black;
     margin: 12px auto 0 auto;
@@ -102,6 +137,11 @@ label {
     padding-right: 20px;
     border-radius: 15px;
     letter-spacing: 2px;
+}
+
+#display{
+    text-align: center;
+    position: absolute;
 }
 
 .even_message{
