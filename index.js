@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let newQuizObj = {}
     let quizObj = {}
     let testTakerName = "";
+    let emailFlag = false;
 
     //main on-click listener
     document.addEventListener("click", e => {
@@ -305,6 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //email results
         sendResult(percentage)
+        emailFlag = true
     }
 
     const shuffle = (array) => {
@@ -385,10 +387,14 @@ document.addEventListener("DOMContentLoaded", () => {
         countdown = setInterval(() => {
         const secondsLeft = Math.round((then - Date.now()) / 1000);
         if(secondsLeft < 0) {
+            alert("Times up!")
             clearInterval(countdown);
-            scoring()
-            switchHiddenDiv(quizResult)
-            switchHiddenDiv(quizContainer)
+            if(emailFlag == false){
+                scoring()
+                switchHiddenDiv(quizResult)
+                switchHiddenDiv(quizContainer)
+                switchHiddenDiv(timerDiv) //display timer
+            }
         }
         displayTimeLeft(secondsLeft);
         }, 1000);
