@@ -339,3 +339,8 @@ th{
   #user_score_value {
     margin-top: 10px;
   }
+
+  #question_image{
+    max-width: 400px;
+    max-height: 400px;
+  }

@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     `
                     <div class="slide">
                         <div id="image_container">
-                            <img src=${currentQuestion.image} width="400px">
+                            <img id="question_image" src=${currentQuestion.image}">
                         </div>
                         <div id="singel_question_container">
                             <div class="question"> ${currentQuestion.statement} </div>
