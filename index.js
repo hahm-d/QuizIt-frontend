@@ -204,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>`
                     )
                 }
+                if(currentQuestion.image !== undefined){
                 output.push(
                     `
                     <div class="slide">
@@ -216,6 +217,17 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>`
                 )
+                }else{
+                    output.push(
+                        `
+                        <div class="slide">
+                            <div id="singel_question_container">
+                                <div class="question"> ${currentQuestion.statement} </div>
+                                ${choices.join("")}
+                            </div>
+                        </div>`
+                    )                    
+                }
             }
         )
             
