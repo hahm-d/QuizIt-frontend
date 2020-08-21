@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             switchHiddenDiv(newQuizInfo)
         }else if (e.target.matches("#submit")){
             scoring()
+            switchHiddenDiv(timerDiv)
             switchHiddenDiv(quizResult)
             switchHiddenDiv(quizContainer)
         }
@@ -278,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let correctAnswers = quizObj.questions.map(question => question.answer) 
 
         let numCorrect = 0;
-        const findTable = document.getElementById("result_table")
+        const findTable = document.getElementById("resultTable")
         //quizResult
         quizObj.questions.forEach((currentQuestion, questionNumber) => {
             const answerCon = correctAnswers[questionNumber];
@@ -427,9 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const messageForm = document.getElementById("send_container")
         const messageInput = document.getElementById("message_input")
         const socket = io("http://localhost:3003")
-        const usermessage = messageInput.value
-        socket.emit("send-chat-message", usermessage)
-        //messageInput.value = ""
+
         const name = prompt("What is your name?")
         socket.emit("new-user", name)
 
@@ -455,6 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
             messageElement.className = userObj.class
             messageElement.innerText = `${userObj.name}: ${userObj.message}`
             messageContainer.append(messageElement)
+            messageElement.scrollTop = messageElement.scrollHeight - messageElement.clientHeight;
         }
         messageForm.addEventListener("submit", e => {
             e.preventDefault()

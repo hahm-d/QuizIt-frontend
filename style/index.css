@@ -52,7 +52,6 @@ label {
 #take_container,
 #confirm_quiz,
 #quiz_taker_info,
-
 #quiz_container{
     text-align: center;
     position: relative;
@@ -73,10 +72,6 @@ label {
     width: 60%;
 }
 
-#result_table{
-    width: 100%;
-}
-
 #join_container {
     text-align: center;
     position: absolute;
@@ -84,7 +79,40 @@ label {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    width: 60%;
+    width: 70%;
+}
+
+#resultTable{
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th{
+    background:rgb(72, 70, 70);
+    color: rgb(247, 249, 250);
+}
+
+#score_header{
+    font-size: 60px;
+    color: #DC143C;
+    letter-spacing: 2px;
+}
+
+#user_percent_value{
+    font-size: 60px;
+    color: #42c58a;
+    animation: reveal 3000ms ease-in-out forwards 200ms;
+}
+
+#user_score_value{
+    font-size: 50px;
+    color: #4ec7f3;
+    animation: reveal 3000ms ease-in-out forwards 200ms;
 }
 
 #chatroom_container{
@@ -100,6 +128,14 @@ label {
     font-size: 50px;
     animation: reveal 3000ms ease-in-out forwards 200ms
 }
+
+#funtimes{
+    background: rgb(97, 189, 250);
+    padding-right: 20px;
+    border-radius: 15px;
+    letter-spacing: 2px;
+}
+
 
 .even_message{
     list-style-type: none;
@@ -135,11 +171,19 @@ label {
 }
 
 #display{
+    background-color: #42c58a;
+    border-radius: 15px 50px;
+    color: white;
     text-align: center;
     position: absolute;
     top: 5%;
-    left: 105px;
-    width: 150px;
+    right: 35px;
+    width: 200px;
+}
+
+.display_time,
+.display_end{
+    margin: auto;
 }
 
 .textboxid{

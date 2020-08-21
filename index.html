@@ -110,8 +110,10 @@
         <button id="submit">Submit Quiz</button>
     </div>
     <div id="quiz_result_container" class="hidden_div">
-        <h1>Results</h1>
-        <table id="result_table">
+        <h1 id="score_header">Results</h1>
+        <h3 id="score_value" placeholder="Score here"></h3>
+        <h2 id="score_percentage" placeholder="Percentage"></h2>
+        <table id="resultTable">
         <tr>
             <th>#</th>
             <th>Question</th>
@@ -122,7 +124,7 @@
     </div>
     <div id="join_container" class="hidden_div">
         <h1 id="chat_header">Welcome to Quit-it Class!</h1><br>
-        <p>Share and discuss quizzes</p><br>
+        <p id="funtimes">Share and discuss quizzes</p><br>
         <ul id="chatroom_container"></ul>
         <form id="send_container">
             <input type="text" id="message_input" placeholder="Enter Message" autocomplete="off" autofocus>
