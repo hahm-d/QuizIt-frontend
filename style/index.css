@@ -45,6 +45,9 @@ label {
     margin: auto;
     width: 40%;
     padding: 10px;
+    border: 1px solid black;
+    border-radius: 35px;
+    background-color: #F9F7E8;
 }
 
 #main,
@@ -62,6 +65,19 @@ label {
     width: 60%;
 }
 
+#confirm_quiz > p {
+    margin: auto;
+}
+
+#quiz_taker_form,
+#confirm_quiz,
+#take_container{  
+  padding-top: 10px;
+  border: 2px solid #f2f2f2;
+  border-radius: 35px;
+  background-color: #F9F7E8;
+}
+
 #quiz_result_container{
     text-align: center;
     position: relative;
@@ -75,7 +91,7 @@ label {
 #join_container {
     text-align: center;
     position: absolute;
-    top: 60%;
+    top: 55%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
@@ -116,9 +132,11 @@ th{
 }
 
 #chatroom_container{
-    border: 10px black;
+    border: 1px solid black;
+    background-color: #F9F7E8;
+    border-radius: 15px;
     margin: 12px auto 0 auto;
-	padding: 10px 10px 10px 10px;
+	  padding: 10px 10px 10px 10px;
     width: 600px;
     height: 300px;
     overflow-x: hidden;
@@ -193,10 +211,18 @@ th{
 
 .each_question{
     display: none;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 35px;
+    background-color: #F9F7E8;
 }
 
 .slide{
     display: none;
+    padding-top: 10px;
+    border: 2px solid #f2f2f2;
+    border-radius: 35px;
+    background-color: #F9F7E8;
 }
 
 .active-slide{
