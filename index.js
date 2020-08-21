@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         })
-        const percentage = (numCorrect / correctAnswers.length) * 100
+        const percentage = Math.floor((numCorrect / correctAnswers.length) * 100)
         let resultValue = document.createElement("div")
         resultValue.className = "resultValueTable"
         resultValue.innerHTML = `
