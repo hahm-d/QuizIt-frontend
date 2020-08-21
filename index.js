@@ -159,7 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
             `
             parent.append(newForm)
             currentSlide = parseInt(newForm.id) - 1
-            console.log(slides)
         }
 
         function showNextSlide() {
@@ -193,7 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const submitButton = document.getElementById("submit");
         questionObj.forEach(
             (currentQuestion, questionNumber) => {
-                console.log(currentQuestion.image)
                 const choices = [];
                 const options = [currentQuestion.answer, currentQuestion.incorrect1, currentQuestion.incorrect2, currentQuestion.incorrect3] 
                 shuffle(options)
@@ -280,7 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let correctAnswers = quizObj.questions.map(question => question.answer) 
 
         let numCorrect = 0;
-        const findTable = document.getElementById("ResultTable")
+        const findTable = document.getElementById("result_table")
         //quizResult
         quizObj.questions.forEach((currentQuestion, questionNumber) => {
             const answerCon = correctAnswers[questionNumber];

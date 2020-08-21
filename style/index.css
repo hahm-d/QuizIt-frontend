@@ -73,6 +73,10 @@ label {
     width: 60%;
 }
 
+#result_table{
+    width: 100%;
+}
+
 #join_container {
     text-align: center;
     position: absolute;
@@ -253,4 +257,8 @@ label {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  #user_score_value {
+    margin-top: 10px;
   }
