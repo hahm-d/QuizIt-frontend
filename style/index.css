@@ -69,6 +69,7 @@ label {
     margin: auto;
 }
 
+#quiz_result_container,
 #quiz_taker_form,
 #confirm_quiz,
 #take_container{  
@@ -86,6 +87,12 @@ label {
     margin-right: -50%;
     transform: translate(-50%, -50%);
     width: 60%;
+}
+
+.resultValueTable{
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-evenly;
 }
 
 #join_container {

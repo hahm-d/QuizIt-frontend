@@ -309,6 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         const percentage = (numCorrect / correctAnswers.length) * 100
         let resultValue = document.createElement("div")
+        resultValue.className = "resultValueTable"
         resultValue.innerHTML = `
         <h3 id="user_score_value">Score: ${numCorrect}/${correctAnswers.length}</h3>
         <h1 id="user_percent_value">${percentage}%</h1>`
