@@ -440,7 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function server(){
         const messageForm = document.getElementById("send_container")
         const messageInput = document.getElementById("message_input")
-        const socket = io("http://localhost:3003")
+        const socket = io()
 
         const name = prompt("What is your name?")
         socket.emit("new-user", name)

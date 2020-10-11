@@ -12,6 +12,7 @@
   "dependencies": {
     "activestorage": "^5.2.4-3",
     "bootstrap": "^4.5.2",
+    "express": "^4.17.1",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
@@ -19,10 +20,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dukhyunko93/QuizCreator_frontend.git"
+    "url": "git+https://github.com/hahm-d/QuizIt-frontend.git"
   },
   "bugs": {
-    "url": "https://github.com/dukhyunko93/QuizCreator_frontend/issues"
+    "url": "https://github.com/hahm-d/QuizIt-frontend/issues"
   },
-  "homepage": "https://github.com/dukhyunko93/QuizCreator_frontend#readme"
+  "homepage": "https://github.com/hahm-d/QuizIt-frontend#readme"
 }
