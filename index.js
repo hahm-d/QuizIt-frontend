@@ -1,3 +1,8 @@
+var jsdom = require("jsdom");
+var JSDOM = jsdom.JSDOM;
+
+global.document = jsdom();
+
 document.addEventListener("DOMContentLoaded", () => {
     const main = document.getElementById("main")
     const chatroom = document.getElementById("join_container")
