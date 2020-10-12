@@ -485,9 +485,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function sendEmail() {
         Email.send({
-            Host: "smtp.gmail.com",
+            Host: "smtp.elasticemail.com",
             Username : "quizit2020@gmail.com",
-            Password : "quizit123!",
+            Password : "7C0AF91EFDC01E2D954B615A80D05CBA9591",
             To : `${newQuizObj.teacher_email}`,
             From : "quizit2020@gmail.com",
             Subject : "Your Quizit Quiz Code",
@@ -500,9 +500,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     function sendResult(score) {
         Email.send({
-            Host: "smtp.gmail.com",
+            Host: "smtp.elasticemail.com",
             Username : "quizit2020@gmail.com",
-            Password : "quizit123!",
+            Password : "7C0AF91EFDC01E2D954B615A80D05CBA9591",
             To : `${quizObj.teacher_email}`,
             From : "quizit2020@gmail.com",
             Subject : `${quizObj.title}, Student: ${testTakerName}'s results `,
